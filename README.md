@@ -60,3 +60,10 @@ Navigate to the outer `app/` folder and enter:
 pip install -r requirements.txt
 ```
 
+### 3. Run app
+
+```sh
+flask run --host=0.0.0.0
+```
+
+Then, navigate to http://localhost:5000.
