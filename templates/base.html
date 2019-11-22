@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} - Rainforest Online Store</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  {% endblock %}
+</head>
+
+<body>
+
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <!-- <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> -->
+        <strong>Rainforest Online Store</strong>
+      </a>
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+
+        <span class="navbar-item">
+            <p class="control has-icons-left">
+                <input class="input" type="email" placeholder="Search...">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-search"></i>
+                </span>
+              </p>
+        </span>
+        <a class="navbar-item">
+          Advanced Search
+        </a>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">
+              <span>Jack Jackson</span>
+              <figure class="image is-24x24" style="margin-left: 10px;">
+                <img src="https://avatars.dicebear.com/v2/avataaars/98vhcas7a8icvxji3qdsd9ais.svg?options[style][]=circle">
+              </figure>
+          </div>
+          
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item has-text-danger">
+              Log out
+            </a>
+          </div>
+        </div>
+
+
+
+        <div class="navbar-item">
+          <div class="buttons">
+
+            <a class="button is-primary">
+              Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Rainforest Online Store</strong> by <a href="https://github.com/Minh3124">Minh Cao</a>, <a
+          href="https://github.com/pokealai">Po Lai</a> and <a href="https://github.com/vigonotion">Tom Schneider</a>.
+      </p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
