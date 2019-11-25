@@ -20,7 +20,10 @@ Then, navigate to http://localhost:5000.
 
 ## Prerequisites
 
-Python 3.
+- Python 3
+- Microsoft ODBC Driver 17
+  - [Download for Windows](https://www.microsoft.com/en-us/download/details.aspx?id=56567)
+  - [Guide for OS X and Linux](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
 
 ## Setup (for development)
 
