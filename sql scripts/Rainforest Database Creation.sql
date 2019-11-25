@@ -7,23 +7,31 @@ CREATE DATABASE Rainforest
 USE Rainforest
 GO
 
+
+CREATE TABLE TCity(
+	zip_code CHAR(4) NOT NULL,
+	city VARCHAR(100) NOT NULL,
+	PRIMARY KEY(zip_code)
+)
+
 CREATE TABLE TUser(
 	email VARCHAR(100) NOT NULL,
 	first_name VARCHAR(100) NOT NULL,
-	sur_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
 	"address" VARCHAR(100) NOT NULL,
 	zip_code CHAR(4) NOT NULL,
-	city VARCHAR(100) NOT NULL,
 	phone_no CHAR(8) NOT NULL,
-	total_paid DECIMAL NOT NULL,
-	PRIMARY KEY(email)
+	total_paid MONEY NOT NULL,
+	PRIMARY KEY(email),
+	FOREIGN KEY(zip_code) REFERENCES TCity
 	);
+
 
 CREATE TABLE TProduct(
 	product_id INT IDENTITY NOT NULL,
 	"name" VARCHAR(100) NOT NULL,
 	"description" TEXT NOT NULL,
-	unit_price DECIMAL NOT NULL,
+	unit_price SMALLMONEY NOT NULL,
 	average_rating numeric(3,2)
 	PRIMARY KEY(product_id)
 	);
@@ -40,7 +48,7 @@ CREATE TABLE TRating(
 
 CREATE TABLE TCreditCard(
 	--check credit card length IN DENMARK
-	credit_no VARCHAR(19) NOT NULL,
+	credit_no VARCHAR(16) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	cardholder_name VARCHAR(200),
 	expiration DATE NOT NULL,
@@ -65,7 +73,7 @@ CREATE TABLE TInvoice_line(
 	invoice_line_id INT IDENTITY NOT NULL,
 	product_id INT NOT NULL,
 	invoice_id INT NOT NULL,
-	price DECIMAL NOT NULL,
+	price MONEY NOT NULL,
 	quantity INT NOT NULL,
 	PRIMARY KEY(invoice_line_id),
 	FOREIGN KEY(product_id) REFERENCES TProduct,
