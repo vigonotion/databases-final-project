@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            Database Check
+        </h1>
+        <p class="subtitle">
+            This page should show you the version of your SQL Server:
+        </p>
+    </div>
+
+    <br>
+
+    <div class="container">
+      <pre>
+        {{ version }}
+      </pre>
+    </div>
+</section>
+{% endblock %}
