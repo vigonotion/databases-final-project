@@ -21,6 +21,7 @@ Then, navigate to http://localhost:5000.
 ## Prerequisites
 
 - Python 3
+- SQL Server
 - Microsoft ODBC Driver 17
   - [Download for Windows](https://www.microsoft.com/en-us/download/details.aspx?id=56567)
   - [Guide for OS X and Linux](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
@@ -63,7 +64,14 @@ Navigate to the outer `app/` folder and enter:
 pip install -r requirements.txt
 ```
 
-### 3. Run app
+### 3. Copy .env.example to .env
+```sh
+cp .env.example .env
+```
+
+Now open this file and edit the variables to reflect your SQL Server authentication data.
+
+### 4. Run app
 
 ```sh
 flask run --host=0.0.0.0
