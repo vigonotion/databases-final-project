@@ -36,7 +36,13 @@ def login():
             return render_template('login.html')
         session['email'] = email
         return redirect(url_for('index'))
-    return render_template('login.html')
+
+    cursor.execute("SELECT email FROM TUser;")
+    emails = [x.email for x in cursor.fetchall()]
+
+    
+
+    return render_template('login.html', emails=emails)
 
 @app.route('/logout')
 def logout():
