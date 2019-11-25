@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1817.3597"
+   height="391.25449"
+   viewBox="0 0 480.84311 103.51941"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 5da689c313, 2019-01-14"
+   sodipodi:docname="rainforest.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="669.54983"
+     inkscape:cy="59.928532"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="3840"
+     inkscape:window-height="2002"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     fit-margin-top="24"
+     fit-margin-left="24"
+     fit-margin-bottom="24"
+     fit-margin-right="24" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-1.4092118,-192.59692)">
+    <path
+       style="fill:#008033;stroke-width:5.40957355"
+       d="m 40.216658,199.15636 c 0,0 -32.4574462,36.51409 -32.4574462,58.15252 A 32.457443,32.457443 0 0 0 40.216658,289.76633 32.457443,32.457443 0 0 0 72.67409,257.30888 c 0,-21.63843 -32.457432,-58.15252 -32.457432,-58.15252 z m 0,38.57697 9.039757,9.03976 h -5.423957 l 9.040274,9.04027 h -5.423957 l 9.039754,9.03976 H 43.832458 v 5.42396 h -7.231597 v -5.42396 H 23.944788 l 9.03976,-9.03976 h -5.423959 l 9.040272,-9.04027 h -5.423957 z"
+       id="path4518"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:67.80010986px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.69500256"
+       x="92.561256"
+       y="249.5936"
+       id="text4555"><tspan
+         sodipodi:role="line"
+         x="92.561256"
+         y="249.5936"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Alata;-inkscape-font-specification:Alata;stroke-width:1.69500256"
+         id="tspan815">RAINFOREST</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40.89135742px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.02228379"
+       x="94.769684"
+       y="288.9725"
+       id="text4555-3"><tspan
+         sodipodi:role="line"
+         x="94.769684"
+         y="288.9725"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Alata;-inkscape-font-specification:Alata;stroke-width:1.02228379"
+         id="tspan815-6">online store</tspan></text>
+  </g>
+</svg>
