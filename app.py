@@ -26,7 +26,11 @@ def checkout():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session['email'] = request.form['email']
+        email = request.form['email']
+        if 'void' in email:
+            flash(u'A user with this email could not be found.', 'danger')
+            return render_template('login.html')
+        session['email'] = email
         return redirect(url_for('index'))
     return render_template('login.html')
 
