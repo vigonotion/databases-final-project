@@ -1014,7 +1014,7 @@ insert into TUser values(N'TristanMLauridsen@rhyta.com',N'Tristan',N'Lauridsen',
 insert into TUser values(N'BenteJSorensen@jourrapide.com',N'Bente',N'Sørensen',N'Toftvej 55',N'1200',N'København K',N'50327099',0);
 insert into TUser values(N'DanielHJeppesen@jourrapide.com',N'Daniel',N'Jeppesen',N'Ådalen 79',N'1877',N'Frederiksberg C',N'53837428',0);
 
-f
+
 
 
 insert into TProduct ("name","description",unit_price) values (N'Goretex Jacket',N'Water and wind proof',4500) ;
