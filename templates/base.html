@@ -46,37 +46,64 @@
       </div>
 
       <div class="navbar-end">
+
+
+        {% if logged_in %}
+
+
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">
-            <span>Jack Jackson</span>
+            <span>{{ name }}</span>
             <figure class="image is-24x24" style="margin-left: 10px;">
-              <img
-                src="https://avatars.dicebear.com/v2/avataaars/98vhcas7a8icvxji3qdsd9ais.svg?options[style][]=circle">
+              <img src="https://avatars.dicebear.com/v2/avataaars/{{ name }}.svg?options[style][]=circle">
             </figure>
           </div>
 
 
           <div class="navbar-dropdown">
-            <a class="navbar-item has-text-danger">
+            <a class="navbar-item has-text-danger" href="/logout">
               Log out
             </a>
           </div>
         </div>
 
+        {% else %}
 
 
         <div class="navbar-item">
           <div class="buttons">
 
-            <a class="button is-primary">
+            <a class="button is-primary" href="/login">
               Log in
             </a>
           </div>
         </div>
+
+        {% endif %}
+
       </div>
     </div>
   </nav>
 
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+
+  <section class="section">
+    <div class="container">
+
+      {% for category, message in messages %}
+      <article class="message is-{{ category }}">
+        <div class="message-body">
+          {{ message }}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+
+  {% endif %}
+  {% endwith %}
   <div id="content">
     {% block content %}
     {% endblock %}
@@ -86,7 +113,8 @@
     <div class="content has-text-centered">
       <p>
         <strong>Rainforest Online Store</strong> by <a href="https://github.com/Minh3124">Minh Cao</a>, <a
-          href="https://github.com/pokealai">Po Lai</a>, <a href="https://github.com/Vanman007">Thomas Petersen</a> and <a href="https://github.com/vigonotion">Tom Schneider</a>.
+          href="https://github.com/pokealai">Po Lai</a>, <a href="https://github.com/Vanman007">Thomas Petersen</a> and
+        <a href="https://github.com/vigonotion">Tom Schneider</a>.
       </p>
     </div>
   </footer>
