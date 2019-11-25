@@ -14,10 +14,14 @@ def index():
         return render_template('index.html', logged_in=True, name=escape(session['email']))
     return render_template('index.html')
 
+@app.route('/search/')
+def search_empty():
+    return render_template('partials/products.html')
+
 @app.route('/search/<query>')
 def search(query):
     print("Searching for {}".format(query))
-    return render_template('search.html', query=query)
+    return render_template('partials/search.html', query=query)
 
 @app.route('/checkout')
 def checkout():
