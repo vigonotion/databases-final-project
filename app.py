@@ -11,7 +11,7 @@ cursor = db.connect().cursor()
 @app.route('/')
 def index():
     if 'email' in session:
-        return render_template('index.html', logged_in=True, name=escape(session['email']))
+        return render_template('index.html', logged_in=True, name=escape(session['name']), email=escape(session['email']))
     return render_template('index.html')
 
 @app.route('/search/')
@@ -31,22 +31,28 @@ def checkout():
 def login():
     if request.method == 'POST':
         email = request.form['email']
-        if 'void' in email:
+
+        # get users from database with this email
+        cursor.execute("SELECT email, first_name, sur_name FROM TUser WHERE email = '{}';".format(email))
+        users = cursor.fetchall()
+
+        if len(users) < 1:
             flash(u'A user with this email could not be found.', 'danger')
             return render_template('login.html')
-        session['email'] = email
+        user = users[0]
+        session['email'] = user.email
+        session['name'] = "{} {}".format(user.first_name, user.sur_name)
         return redirect(url_for('index'))
 
-    cursor.execute("SELECT email FROM TUser;")
+    cursor.execute("SELECT email FROM TUser;");
     emails = [x.email for x in cursor.fetchall()]
-
-    
 
     return render_template('login.html', emails=emails)
 
 @app.route('/logout')
 def logout():
     session.pop('email', None)
+    session.pop('name', None)
     flash(u'You\'ve been logged out successfully.', 'success')
     return redirect(url_for('index'))
 
