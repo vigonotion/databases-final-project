@@ -8,6 +8,7 @@
   <title>{% block title %}{% endblock %} - Rainforest Online Store</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script defer src="/static/index.js"></script>
   {% endblock %}
 </head>
 
@@ -33,7 +34,7 @@
 
         <span class="navbar-item">
           <p class="control has-icons-left">
-            <input class="input" type="email" placeholder="Search...">
+            <input class="input" type="email" placeholder="Search..." id="search">
             <span class="icon is-small is-left">
               <i class="fas fa-search"></i>
             </span>
@@ -76,8 +77,10 @@
     </div>
   </nav>
 
-  {% block content %}
-  {% endblock %}
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
 
   <footer class="footer">
     <div class="content has-text-centered">

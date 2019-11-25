@@ -17,6 +17,11 @@ def hello_world():
         row = cursor.fetchone()
     return render_template('index.html', name='Otto')
 
+@app.route('/search/<query>')
+def search(query):
+    print("Searching for {}".format(query))
+    return render_template('search.html', query=query)
+
 @app.route('/checkout')
 def checkout():
     return render_template('checkout.html', name='Otto')
