@@ -1,21 +1,5 @@
-﻿/*
-CREATE TABLE TUser (
-  emailaddress nvarchar(100) NOT NULL,
-  givenname nvarchar(20) NOT NULL,
-  surname nvarchar(23) NOT NULL,
-  streetaddress nvarchar(100) NOT NULL,
-  zipcode nvarchar(15) NOT NULL,
-  city nvarchar(100) NOT NULL,
-  telephonenumber nvarchar(25) NOT NULL
-,0);
-*/
-USE Rainforest
-GO
-
-
-
-
-
+-- Data for TProduct
+-- manually created
 
 insert into TProduct ("name","description",unit_price) values (N'Goretex Jacket',N'Water and wind proof',4500) ;
 insert into TProduct ("name","description",unit_price) values (N'Goreteks Jacket',N'Water proof',2000);
@@ -38,12 +22,3 @@ insert into TProduct ("name","description",unit_price) values (N'Camera',N'Make 
 insert into TProduct ("name","description",unit_price) values (N'Fanny pack',N'Fast access to your equipment',300);
 insert into TProduct ("name","description",unit_price) values (N'Walking stick',N'Move twice as fast',700) ;
 insert into TProduct ("name","description",unit_price) values (N'Wood',N'Wood to keep the fire alive',6000);
-
-insert into TRating 
-
-
-
-insert into TRating (product_id, email, rating, comment) values (N'',N'')
-
-
-GO
