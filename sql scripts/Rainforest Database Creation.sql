@@ -1,9 +1,5 @@
-USE master
-GO
-
-DROP DATABASE IF EXISTS Rainforest
-
 CREATE DATABASE Rainforest
+GO
 USE Rainforest
 GO
 
@@ -48,12 +44,12 @@ CREATE TABLE TRating(
 
 CREATE TABLE TCreditCard(
 	--check credit card length IN DENMARK
-	credit_no VARCHAR(16) NOT NULL,
+	credit_card_no VARCHAR(16) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	cardholder_name VARCHAR(200),
 	expiration DATE NOT NULL,
 	CCV NUMERIC(3,0) NOT NULL,
-	PRIMARY KEY(credit_no),
+	PRIMARY KEY(credit_card_no),
 	FOREIGN KEY(email) REFERENCES TUser
 	);
 
@@ -63,10 +59,10 @@ CREATE TABLE TInvoice(
 	vat NUMERIC(2,0) NOT NULL,
 	total_price DECIMAL NOT NULL,
 	email VARCHAR(100) NOT NULL,
-	card_no VARCHAR(19) NOT NULL,
+	credit_card_no VARCHAR(16) NOT NULL,
 	PRIMARY KEY(invoice_id),
 	FOREIGN KEY(email) REFERENCES TUser,
-	FOREIGN KEY(card_no) REFERENCES TCreditCard
+	FOREIGN KEY(credit_card_no) REFERENCES TCreditCard
 	);
 
 CREATE TABLE TInvoice_line(
