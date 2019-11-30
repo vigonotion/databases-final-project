@@ -66,3 +66,23 @@ def db_check():
         version.append(row[0])
         row = cursor.fetchone()
     return render_template('db_check.html', version='\n'.join(version))
+
+@app.route('/RateAndComment', methods=['GET','POST'])
+def RateAndComment():
+    if request.method == 'POST':
+        product_id = request.form['product_id']
+        email = session['email']
+        rating = request.form['rating']
+        comment = request.form['comment']
+	    #try save changes to DB or send user back to page with the users inputs
+        try:
+            cursor.execute(""" insert into TRating (iProduct_id,cEmail,iRating,cComment) 
+          	values( ? , ? , ? , ? ) """, 
+           	product_id,email,rating,comment)
+            cursor.commit()
+            return render_template('RateAndComment.html')
+        except:
+            cursor.rollback()
+            return render_template('RateAndComment.html', rating=rating, comment=comment)
+    else:
+        return render_template('RateAndComment.html')
