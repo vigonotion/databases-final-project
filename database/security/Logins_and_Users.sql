@@ -9,3 +9,7 @@ ALTER ROLE [db_owner] ADD MEMBER DbAdmin
 --USE master;
 --DROP USER DbAdmin;
 --DROP LOGIN Administrator;
+
+CREATE LOGIN business01	WITH PASSWORD = '123'
+CREATE USER peter FOR LOGIN business01
+ALTER ROLE db_datareader ADD MEMBER peter
