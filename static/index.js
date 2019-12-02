@@ -30,8 +30,5 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
             product_container.insertAdjacentHTML('beforeend', r.responseText);
         };
         r.send();
-
-
-    })
-
+    });
 });
