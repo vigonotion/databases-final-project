@@ -1,16 +1,68 @@
 <section class="section">
     <div class="container">
-        <h1 class="title">
-            Welcome to the Rainforest Online Store!
-        </h1>
-        <p class="subtitle">
-            Get anything you want for a fair price.
-        </p>
-    </div>
 
-    <br>
 
-    <div class="container">
+        {% for product in products %}
+
+        <div class="box product">
+
+            <div class="product-overview">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image">
+                            <img src="https://via.placeholder.com/200x300" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <h1 class="title">{{ product.cName }}</h1>
+                            <p>
+                                {{ product.cDescription }}
+                            </p>
+
+                            <h3>{{ product.fUnitPrice|dkk }}</h3>
+
+                            <br>
+
+                            {% if product.fAverageRating == None %}
+                                No ratings yet · <a href="#">Rate Product</a>
+                            {% else %}
+                            <div class="rating">
+
+                                {% set fullStars = product.fAverageRating|round|int %}
+                                {% set halfStar = product.fAverageRating - fullStars >= 0.5 %}
+                                {% set ns = namespace(stars=0) %}
+
+                                {% for i in range(fullStars) %}
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    {% set ns.stars = ns.stars + 1 %}
+                                {% endfor %}
+
+                                {% if halfStar %}
+                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                    {% set ns.stars = ns.stars + 1 %}
+                                {% endif %}
+
+                                {% for i in range(5 - ns.stars) %}
+                                    <i class="far fa-star" aria-hidden="true"></i>
+                                {% endfor %}
+                            </div>
+
+                            Average Rating: {{ product.fAverageRating }} · <a href="#">See Ratings</a> · <a href="#">Rate Product</a>
+                        
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </article>
+            </div>
+            
+            {# rating... #}
+
+        </div>
+
+        {% endfor %}
+
 
         <div class="box product">
 

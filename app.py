@@ -10,18 +10,33 @@ cursor = db.connect().cursor()
 
 @app.route('/')
 def index():
+
+    # get all products
+    cursor.execute('SELECT * FROM TProduct')
+    products = cursor.fetchall()
+
     if 'email' in session:
-        return render_template('index.html', logged_in=True, name=escape(session['name']), email=escape(session['email']))
-    return render_template('index.html')
+        return render_template('index.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), products=products)
+    return render_template('index.html', products=products)
 
 @app.route('/search/')
 def search_empty():
-    return render_template('partials/products.html')
+    # get all products
+    cursor.execute('SELECT * FROM TProduct')
+    products = cursor.fetchall()
+
+    if 'email' in session:
+        return render_template('partials/products.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), products=products)
+    return render_template('partials/products.html', products=products)
 
 @app.route('/search/<query>')
 def search(query):
-    print("Searching for {}".format(query))
-    return render_template('partials/search.html', query=query)
+    sql = 'SELECT * FROM TProduct WHERE cName LIKE \'%{}%\''.format(query)
+    print(sql)
+    cursor.execute(sql)
+    products = cursor.fetchall()
+
+    return render_template('partials/search.html', query=query, products=products)
 
 @app.route('/checkout')
 def checkout():
@@ -86,3 +101,8 @@ def RateAndComment():
             return render_template('RateAndComment.html', rating=rating, comment=comment)
     else:
         return render_template('RateAndComment.html')
+
+# custom filters
+@app.template_filter()
+def dkk(value):
+    return "{:.2f} kr.".format(value)
