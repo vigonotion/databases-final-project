@@ -66,7 +66,7 @@ CREATE TABLE TInvoice(
 	FOREIGN KEY(cCreditCardNo) REFERENCES TCreditCard
 	);
 
-CREATE TABLE TInvoice_line(
+CREATE TABLE TInvoiceLine(
 	iInvoiceLineId INT IDENTITY NOT NULL,
 	iProductId INT NOT NULL,
 	iInvoiceId INT NOT NULL,
