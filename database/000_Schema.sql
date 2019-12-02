@@ -19,7 +19,7 @@ CREATE TABLE TUser(
 	cZipCode CHAR(4) NOT NULL,
 	cPhoneNo CHAR(8) NOT NULL,
 	fTotalPaid MONEY,
-	PRIMARY KEY(cEmail),
+	PRIMARY KEY(iUserId),
 	FOREIGN KEY(cZipCode) REFERENCES TCity
 	);
 
@@ -35,23 +35,23 @@ CREATE TABLE TProduct(
 
 CREATE TABLE TRating(
 	iProductId INT NOT NULL,
-	cEmail VARCHAR(100) NOT NULL,
+	iUserId int NOT NULL,
 	iRating NUMERIC(1,0) NOT NULL,
 	cComment VARCHAR(1400),
-	PRIMARY KEY(iProductId, cEmail),
+	PRIMARY KEY(iProductId, iUserId),
 	FOREIGN KEY(iProductId) REFERENCES TProduct,
-	FOREIGN KEY(cEmail) REFERENCES TUser
+	FOREIGN KEY(iUserId) REFERENCES TUser
 	);
 
 CREATE TABLE TCreditCard(
 	--check credit card length IN DENMARK
 	cCreditCardNo CHAR(16) NOT NULL,
-	cEmail VARCHAR(100) NOT NULL,
+	iUserId int NOT NULL,
 	cCardholderName VARCHAR(200),
 	cExpiration DATE NOT NULL,
 	cCCV NUMERIC(3,0) NOT NULL,
 	PRIMARY KEY(cCreditCardNo),
-	FOREIGN KEY(cEmail) REFERENCES TUser
+	FOREIGN KEY(iUserId) REFERENCES TUser
 	);
 
 CREATE TABLE TInvoice(
@@ -59,10 +59,10 @@ CREATE TABLE TInvoice(
 	dDate DATETIME2 NOT NULL,
 	iVat NUMERIC(2,0) NOT NULL,
 	fTotalPrice MONEY NOT NULL,
-	cEmail VARCHAR(100) NOT NULL,
+	iUserId int NOT NULL,
 	cCreditCardNo CHAR(16) NOT NULL,
 	PRIMARY KEY(iInvoiceId),
-	FOREIGN KEY(cEmail) REFERENCES TUser,
+	FOREIGN KEY(iUserId) REFERENCES TUser,
 	FOREIGN KEY(cCreditCardNo) REFERENCES TCreditCard
 	);
 
