@@ -1,0 +1,75 @@
+<div class="product-rating" style="margin-top: 16px">
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img
+                    src="https://avatars.dicebear.com/v2/avataaars/98vhcas7a8icvxji3qdsd9ais.svg?options[style][]=circle">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="field">
+                <div>Rate this product:</div>
+                <i class="far fa-star" aria-hidden="true"></i>
+                <i class="far fa-star" aria-hidden="true"></i>
+                <i class="far fa-star" aria-hidden="true"></i>
+                <i class="far fa-star" aria-hidden="true"></i>
+                <i class="far fa-star" aria-hidden="true"></i>
+            </div>
+            <div class="field">
+                <p>Add an optional comment:</p>
+                <p class="control">
+                    <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                </p>
+            </div>
+            <nav class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <a class="button is-info">Rate</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+    </article>
+
+    {% for rating in ratings %}
+
+    <article class="media rating">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="https://avatars.dicebear.com/v2/avataaars/{{ rating.iUserId }}.svg?options[style][]=circle">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ rating.cFirstName}} {{ rating.cLastName }}</strong>
+                    <div class="rating">
+                        {% set fullStars = rating.iRating|int %}
+                        {% set ns = namespace(stars=0) %}
+
+                        {% for i in range(fullStars) %}
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            {% set ns.stars = ns.stars + 1 %}
+                        {% endfor %}
+
+                        {% for i in range(5 - ns.stars) %}
+                            <i class="far fa-star" aria-hidden="true"></i>
+                        {% endfor %}
+                    </div>
+
+                    {% if rating.cComment %}
+
+                    <br>
+                    <div class="comment">
+                        {{ rating.cComment }}
+                    </div>
+
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </article>
+
+    {% endfor %}
+</div>

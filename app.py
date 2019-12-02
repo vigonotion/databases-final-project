@@ -102,7 +102,25 @@ def RateAndComment():
     else:
         return render_template('RateAndComment.html')
 
+##################################################################################
+# api
+##################################################################################
+
+@app.route('/api/products/<int:product_id>/ratings')
+def product_ratings(product_id):
+    cursor.execute("""
+        select * from TRating
+        inner join TUser on TRating.iUserId = TUser.iUserId
+        where iProductId = ?
+    """, product_id)
+
+    ratings = cursor.fetchall()
+    return render_template('partials/ratings.html', ratings=ratings)
+
+##################################################################################
 # custom filters
+###################################################################################
+
 @app.template_filter()
 def dkk(value):
     return "{:.2f} kr.".format(value)

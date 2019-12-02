@@ -13,3 +13,25 @@ search_box.addEventListener('input', function(e) {
     };
     r.send();
 });
+
+document.querySelectorAll(".see-ratings").forEach(function(a) {
+
+    a.addEventListener('click', function(e) {
+        e.preventDefault();
+        let product_id = e.target.getAttribute('data-product-id');
+        
+        let product_container = e.target.closest('.product');
+
+        var r = new XMLHttpRequest();
+        r.open("GET", "/api/products/" + product_id + "/ratings", true);
+        r.onreadystatechange = function () {
+            if (r.readyState != 4 || r.status != 200) return;
+
+            product_container.insertAdjacentHTML('beforeend', r.responseText);
+        };
+        r.send();
+
+
+    })
+
+});

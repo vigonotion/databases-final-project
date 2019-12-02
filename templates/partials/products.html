@@ -25,7 +25,7 @@
                             <br>
 
                             {% if product.fAverageRating == None %}
-                                No ratings yet · <a href="#">Rate Product</a>
+                                No ratings yet · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">Rate Product</a>
                             {% else %}
                             <div class="rating">
 
@@ -48,7 +48,7 @@
                                 {% endfor %}
                             </div>
 
-                            Average Rating: {{ product.fAverageRating }} · <a href="#">See Ratings</a> · <a href="#">Rate Product</a>
+                            Average Rating: {{ product.fAverageRating }} · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">See Ratings / Rate Product</a>
                         
                             {% endif %}
                         </div>
@@ -62,130 +62,4 @@
         </div>
 
         {% endfor %}
-
-
-        <div class="box product">
-
-            <div class="product-overview">
-                <article class="media">
-                    <div class="media-left">
-                        <figure class="image">
-                            <img src="https://via.placeholder.com/200x300" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <div class="content">
-                            <h1 class="title">Product Name</h1>
-                            <p>
-                                This is the description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                            </p>
-
-                            <h3>2.500 kr.</h3>
-
-                            <br>
-
-                            <div class="rating">
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                <i class="far fa-star" aria-hidden="true"></i>
-                            </div>
-
-                            Average Rating: 3.87 · <a href="#">See Ratings</a> · <a href="#">Rate Product</a>
-                        </div>
-
-                    </div>
-                </article>
-            </div>
-            <br />
-            <div class="product-rating">
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-64x64">
-                            <img
-                                src="https://avatars.dicebear.com/v2/avataaars/98vhcas7a8icvxji3qdsd9ais.svg?options[style][]=circle">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="field">
-                            <div>Rate this product:</div>
-                            <i class="far fa-star" aria-hidden="true"></i>
-                            <i class="far fa-star" aria-hidden="true"></i>
-                            <i class="far fa-star" aria-hidden="true"></i>
-                            <i class="far fa-star" aria-hidden="true"></i>
-                            <i class="far fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="field">
-                            <p>Add an optional comment:</p>
-                            <p class="control">
-                                <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                            </p>
-                        </div>
-                        <nav class="level">
-                            <div class="level-left">
-                                <div class="level-item">
-                                    <a class="button is-info">Rate</a>
-                                </div>
-                            </div>
-                        </nav>
-                    </div>
-
-                </article>
-
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-64x64">
-                            <img src="https://avatars.dicebear.com/v2/avataaars/f2439vf.svg?options[style][]=circle">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>Frank Frost</strong> <small>Aug 21, 2019</small>
-                                <div class="rating">
-                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                    <i class="far fa-star" aria-hidden="true"></i>
-                                    <i class="far fa-star" aria-hidden="true"></i>
-                                </div>
-                                <br>
-                                <div class="comment">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu
-                                    pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis
-                                    feugiat facilisis.
-                                </div>
-                            </p>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="media">
-                        <figure class="media-left">
-                            <p class="image is-64x64">
-                                <img src="https://avatars.dicebear.com/v2/avataaars/19393211223.svg?options[style][]=circle">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>Monica Gibbons</strong> <small>Jul 4, 2019</small>
-                                    <div class="rating">
-                                        <i class="fas fa-star" aria-hidden="true"></i>
-                                        <i class="fas fa-star" aria-hidden="true"></i>
-                                        <i class="fas fa-star" aria-hidden="true"></i>
-                                        <i class="fas fa-star" aria-hidden="true"></i>
-                                        <i class="fas fa-star" aria-hidden="true"></i>
-                                    </div>
-                                </p>
-                            </div>
-                        </div>
-                    </article>
-
-            </div>
-
-        </div>
-
     </div>
