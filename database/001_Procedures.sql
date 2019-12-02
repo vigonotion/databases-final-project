@@ -1,12 +1,12 @@
 -- calculates the average rating for a product based on all ratings.
-create procedure SetAvgProductRating (@product_id INT) as
+create procedure SetAvgProductRating (@iProductId INT) as
 begin
 
     set nocount on
     update TProduct
-    set average_rating = (
-        select avg(rating) from TRating where product_id = @product_id group by product_id
+    set fAverageRating = (
+        select avg(iRating) from TRating where iProductId = @iProductId group by iProductId
     )
-    where product_id = @product_id
+    where iProductId = @iProductId
 
 end
