@@ -32,3 +32,24 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
         r.send();
     });
 });
+
+$(function() {
+    $('[id^=BuyProduct]').click(function() {
+        productId=$(this).val()
+        console.log(productId)
+        $.ajax({
+            url: '/AddToCart',
+            contentType: 'application/json',
+            data: JSON.stringify(productId),
+            dataType : 'text',
+            type: 'POST',
+            success: function(response) {
+                alert("Product was added to ur cart");
+            },
+            error: function(error) {
+                alert("Oh no somthing went wrong! ur product was not added");
+            }
+        });
+    });
+});   
+

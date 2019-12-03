@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container is-fluid">
+
+    <section class="section">
+        <div class="container">
+
+    
+            {% if haspurchases%}
+            <h2 class="title has-text-centered">Your Shopping Chart</h2>
+            <table class="table" width="100%">
+                    <thead>
+                      <tr>
+                        <th width="10%"><abbr title="Image">IMG</abbr></th>
+                        <th width="10%"><abbr title="Name">Name</abbr></th>
+                        <th width="40%"><abbr title="Description"> Description</abbr></th>
+                        <th width="10%"><abbr title="Amount">Quantity</abbr></th>
+                        <th width="10%"><abbr title="Price">Price</abbr></th>
+                        <th width="10%"><abbr title="Total">Total</abbr></th>
+                        <th width="10%"><abbr title="Delete">Remove</abbr></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%for product in cartProduct%}
+
+                      <tr id="DeleteProduct{{ product.iProductId }}Row">
+                        <td>/somdest/{{product.iProductId}}.img</td>
+                        <td>{{product.cName}}Verigood</td>
+                        <td>{{product.cDescription}}Verigood</td>
+                        <td>{{product.fUnitPrice}}x number</td>
+                        <td></td>
+                        <td>math</td>
+                        <td><button class="link" class="button" id="DeleteProduct{{ product.iProductId }}" value="{{ product.iProductId }}">-</button>
+                        </td>
+                      </tr>
+
+                      {%endfor%}
+                    </tbody>
+                </table>
+            {% else %}
+                <h2 class="title has-text-centered">You got no items in ur chart. get back out there and shop away!</h2>
+            {% endif %}
+        </div>
+    </section>
+</div>
+
+                    
+<script>
+$(function() {
+    $('[id^=DeleteProduct]').click(function() {
+        productToDelete=$(this).attr("id")
+        productId=$(this).val()
+        console.log(productId)
+        $.ajax({
+            url: '/DeleteFromCart',
+            contentType: 'application/json',
+            data: JSON.stringify(productId),
+            dataType : 'text',
+            type: 'POST',
+            success: function(response) {
+                //$("#"+$(this).attr("id")+"Row").remove();
+                $("#"+productToDelete).remove();
+            },
+            error: function(error) {
+                //alert("Oh no somthing went wrong! ur product was not deleted");
+                //console.log("#"+productToDelete+"Row")
+                
+                //$("#"+productToDelete).remove();
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

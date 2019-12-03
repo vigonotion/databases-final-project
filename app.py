@@ -48,19 +48,19 @@ def login():
         email = request.form['email']
 
         # get users from database with this email
-        cursor.execute("SELECT email, first_name, sur_name FROM TUser WHERE email = '{}';".format(email))
+        cursor.execute("SELECT cEmail, cFirstName, cLastName FROM TUser WHERE cEmail = '{}';".format(email))
         users = cursor.fetchall()
 
         if len(users) < 1:
             flash(u'A user with this email could not be found.', 'danger')
             return render_template('login.html')
         user = users[0]
-        session['email'] = user.email
-        session['name'] = "{} {}".format(user.first_name, user.sur_name)
+        session['email'] = user.cEmail
+        session['name'] = "{} {}".format(user.cFirstName, user.cLastName)
         return redirect(url_for('index'))
 
-    cursor.execute("SELECT email FROM TUser;");
-    emails = [x.email for x in cursor.fetchall()]
+    cursor.execute("SELECT cEmail FROM TUser;")
+    emails = [x.cEmail for x in cursor.fetchall()]
 
     return render_template('login.html', emails=emails)
 
@@ -101,6 +101,50 @@ def RateAndComment():
             return render_template('RateAndComment.html', rating=rating, comment=comment)
     else:
         return render_template('RateAndComment.html')
+
+@app.route("/ShoppingCart")
+def ShoppingChart():
+    if "cartProduct" not in session:
+        session["cartProduct"] = []
+    
+    print(str(session["cartProduct"])+"lol")
+
+    tempCart=session["cartProduct"]
+
+    shoppingChart=[]
+    for product_id in tempCart: 
+        cursor.execute("""
+            select * from TProduct
+            where iProductId = ?
+        """, product_id)
+        product= cursor.fetchall()
+        #product[0].fUnitPrice=round(product[0].fUnitPrice,2)
+        shoppingChart.append(product[0])
+    
+    print(shoppingChart)
+
+    return render_template('ShoppingCart.html', haspurchases=True, cartProduct=shoppingChart)
+
+
+@app.route('/AddToCart', methods=['POST'])
+def AddToCart():
+    if "cartProduct" not in session:
+        session["cartProduct"] = []
+    tempCart=session["cartProduct"]
+    productId = request.get_json()
+    tempCart.append(productId)
+    session["cartProduct"] = tempCart
+    return "succes"
+
+
+@app.route('/DeleteFromCart', methods=['POST'])
+def DeleteFromCart():
+    tempCart=session["cartProduct"]
+    productId = request.get_json()
+    tempCart.remove(productId)
+    session["cartProduct"] = tempCart
+    return "succes"
+
 
 ##################################################################################
 # api

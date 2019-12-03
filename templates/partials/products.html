@@ -23,6 +23,9 @@
                             <h3>{{ product.fUnitPrice|dkk }}</h3>
 
                             <br>
+                            <button class="link" class="button" id="BuyProduct{{ product.iProductId }}" value="{{ product.iProductId }}">+</button>
+                             Buy product
+                            <br>
 
                             {% if product.fAverageRating == None %}
                                 No ratings yet · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">Rate Product</a>
