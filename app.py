@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, escape, request, redirect, ur
 from dotenv import load_dotenv
 import os
 import db
+from collections import Counter
 
 load_dotenv(verbose=True)
 app = Flask(__name__)
@@ -102,28 +103,25 @@ def RateAndComment():
     else:
         return render_template('RateAndComment.html')
 
+
+
 @app.route("/ShoppingCart")
-def ShoppingChart():
+def ShoppingCart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
-    
-    print(str(session["cartProduct"])+"lol")
 
     tempCart=session["cartProduct"]
-
-    shoppingChart=[]
-    for product_id in tempCart: 
+    counter=Counter(tempCart)
+    shoppingCart=[]
+    for product_id in counter:
         cursor.execute("""
             select * from TProduct
             where iProductId = ?
         """, product_id)
-        product= cursor.fetchall()
-        #product[0].fUnitPrice=round(product[0].fUnitPrice,2)
-        shoppingChart.append(product[0])
-    
-    print(shoppingChart)
+        product= cursor.fetchone()
+        shoppingCart.append(product)
 
-    return render_template('ShoppingCart.html', haspurchases=True, cartProduct=shoppingChart)
+    return render_template('ShoppingCart.html', haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
 
 
 @app.route('/AddToCart', methods=['POST'])
@@ -142,6 +140,7 @@ def DeleteFromCart():
     tempCart=session["cartProduct"]
     productId = request.get_json()
     tempCart.remove(productId)
+    #tempCart =list(filter(lambda a: a != productId, tempCart))
     session["cartProduct"] = tempCart
     return "succes"
 

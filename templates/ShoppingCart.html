@@ -6,32 +6,36 @@
 
     <section class="section">
         <div class="container">
-
-    
             {% if haspurchases%}
+            <nav class="level">
+                    <div class="level-item has-text-centered">
+                      <button class="link is-info">Buy more</a>
+                    </div>
+                    <div class="level-item has-text-centered">
+                      <button class="link is-info">Checkout</a>
+                    </div>
+                  </nav>
+
             <h2 class="title has-text-centered">Your Shopping Chart</h2>
             <table class="table" width="100%">
                     <thead>
                       <tr>
                         <th width="10%"><abbr title="Image">IMG</abbr></th>
                         <th width="10%"><abbr title="Name">Name</abbr></th>
-                        <th width="40%"><abbr title="Description"> Description</abbr></th>
-                        <th width="10%"><abbr title="Amount">Quantity</abbr></th>
-                        <th width="10%"><abbr title="Price">Price</abbr></th>
-                        <th width="10%"><abbr title="Total">Total</abbr></th>
-                        <th width="10%"><abbr title="Delete">Remove</abbr></th>
+                        <th width="35%"><abbr title="Description"> Description</abbr></th>
+                        <th width="15%"><abbr title="Amount">Quantity</abbr></th>
+                        <th width="15%"><abbr title="Price">Price</abbr></th>
+                        <th width="15%"><abbr title="Delete">Remove</abbr></th>
                       </tr>
                     </thead>
                     <tbody>
                         {%for product in cartProduct%}
-
-                      <tr id="DeleteProduct{{ product.iProductId }}Row">
+                      <tr id="DeleteDivProduct{{ product.iProductId }}">
                         <td>/somdest/{{product.iProductId}}.img</td>
-                        <td>{{product.cName}}Verigood</td>
-                        <td>{{product.cDescription}}Verigood</td>
-                        <td>{{product.fUnitPrice}}x number</td>
-                        <td></td>
-                        <td>math</td>
+                        <td>{{product.cName}}</td>
+                        <td>{{product.cDescription}}</td>
+                        <td id="quantity{{ product.iProductId }}">x</td>
+                        <td id="price{{ product.iProductId }}">{{product.fUnitPrice|dkk}}</td>
                         <td><button class="link" class="button" id="DeleteProduct{{ product.iProductId }}" value="{{ product.iProductId }}">-</button>
                         </td>
                       </tr>
@@ -48,11 +52,20 @@
 
                     
 <script>
+passUniqeProducts = '{{uniqeProducts|tojson}}';
+var uniqeProducts = JSON.parse(passUniqeProducts);
+
+$(document).ready(function (){
+    $.each(uniqeProducts, function(k, v) {
+    var $quantityElement = $("#quantity"+k);
+    var text = $quantityElement.text();
+    $quantityElement.text(text.replace(text, v+""));
+});
+});
+
 $(function() {
     $('[id^=DeleteProduct]').click(function() {
-        productToDelete=$(this).attr("id")
         productId=$(this).val()
-        console.log(productId)
         $.ajax({
             url: '/DeleteFromCart',
             contentType: 'application/json',
@@ -60,14 +73,19 @@ $(function() {
             dataType : 'text',
             type: 'POST',
             success: function(response) {
-                //$("#"+$(this).attr("id")+"Row").remove();
-                $("#"+productToDelete).remove();
+                var $quantityElement = $("#quantity"+productId)
+                var oldText = $quantityElement.text();
+                var textVal = parseInt($quantityElement.text());
+                if (textVal != 1){
+                    textVal=textVal-1
+                    $quantityElement.text(oldText.replace(oldText, textVal+""))
+                }else{
+                    $("#DeleteDivProduct"+productId).remove()
+                }
+
             },
             error: function(error) {
-                //alert("Oh no somthing went wrong! ur product was not deleted");
-                //console.log("#"+productToDelete+"Row")
-                
-                //$("#"+productToDelete).remove();
+                alert("Oh no somthing went wrong! ur product was not deleted");
             }
         });
     });
