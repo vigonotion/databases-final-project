@@ -3,69 +3,73 @@
 
 {% block content %}
 <section class="section">
-    <div class="container">
-        {% if loggedin %}
+  {% if logged_in %}
+  <div class="container">
 
-        <h1 class="title">
-            Checkout
-        </h1>
-        <p class="subtitle">
-            Please select payment method to finish your purchase.
-        </p>
+
+    <h1 class="title">
+      Checkout
+    </h1>
+    <p class="subtitle">
+      Please select payment method to finish your purchase.
+    </p>
+  </div>
+
+  <br>
+
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><abbr title="Position">Pos</abbr></th>
+          <th>Product Name</th>
+          <th>Amount</th>
+          <th>Unit price</th>
+          <th>Total price</th>
+        </tr>
+      </thead>
+      <tbody>
+          {%for i in range(0,numberOfItems)%}
+        <tr>
+          <td><strong>1</strong></td>
+          <td>{{checkoutItems[i][0].cName}}</td>
+          <td>{{checkoutItems[i][1]}}</td>
+          <td>{{checkoutItems[i][0].fUnitPrice|dkk}}</td>
+          <td>{{checkoutItems[i][2]|dkk}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+
+    <p>Total: <b>{{total|dkk}}</b></p>
+  </div>
+  <br><br>
+  <div class="container">
+    <div class="control has-icons-left">
+      <div class="select">
+        <select>
+          <option selected disabled>Select credit card...</option>
+          {%for creditCard in userCreditCards%}
+          <option>{{creditCard}}</option>
+          {%endfor%}
+        </select>
+      </div>
+      <span class="icon is-left">
+        <i class="fas fa-credit-card"></i>
+      </span>
     </div>
-
     <br>
-
-    <div class="container">
-            <table class="table">
-                    <thead>
-                      <tr>
-                        <th><abbr title="Position">Pos</abbr></th>
-                        <th>Product Name</th>
-                        <th>Amount</th>
-                        <th>Unit price</th>
-                        <th>Total price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><strong>1</strong></td>
-                        <td>Potato Chips (salted)</td>
-                        <td>2</td>
-                        <td>9,95 kr.</td>
-                        <td>19,90 kr.</td>
-                      </tr>
-                      <tr>
-                            <td><strong>2</strong></td>
-                            <td>Ketchup</td>
-                            <td>1</td>
-                            <td>12,00 kr.</td>
-                            <td>12,00 kr.</td>
-                          </tr>
-                    </tbody>
-                  </table>
-
-                  <p>Total: <b>31,90 kr.</b></p>
+    <div>
+      <a class="button is-primary">Purchase now</a>
     </div>
-    <br><br>
-    <div class="container">
-            <div class="control has-icons-left">
-                    <div class="select">
-                      <select>
-                        <option selected disabled>Select credit card...</option>
-                        <option>9829 0262 9173 2855</option>
-                        <option>7392 9917 8282 8320</option>
-                      </select>
-                    </div>
-                    <span class="icon is-left">
-                      <i class="fas fa-credit-card"></i>
-                    </span>
-                  </div>
-                  <br>
-                  <div>
-                  <a class="button is-primary">Purchase now</a>
-                </div>
+  </div>
 
-    </div>
+  {%else%}
+  <div>
+    <h1>You need to login to make Purchases!!</h1>
+  </div>
+  {%endif%}
+
+
 </section>
 {% endblock %}

@@ -41,7 +41,42 @@ def search(query):
 
 @app.route('/checkout')
 def checkout():
-    return render_template('checkout.html', name='Otto')
+    if not 'email' in session:
+        return render_template('checkout.html', logged_in=False)
+    tempCart=session["cartProduct"]
+    counter=Counter(tempCart)
+    checkoutItems=[]
+    for product_id in counter:
+        cursor.execute("""
+            select * from TProduct
+            where iProductId = ?
+        """, product_id)
+        product= cursor.fetchone()
+        #pos 1 product object 
+        #pos 2 amount of products
+        #pos 3 total price of all of that product (pos1*pos2)
+        checkoutItems.append([product,counter[product_id],(counter[product_id]*product.fUnitPrice)])
+
+    numberOfItems=len(checkoutItems)
+    cursor.execute("""
+        select iUserId from TUser
+        where cEmail = ?
+        """, escape(session['email']))
+
+    UserId=cursor.fetchone()[0]
+
+    cursor.execute("""
+        select cCreditCardNo from TCreditCard
+        where iUserId = ?
+        """, UserId )
+
+    usersCreditCards=cursor.fetchall()
+    print(usersCreditCards)
+    total=0
+    for i in range(0,len(checkoutItems)):
+        total=total+checkoutItems[i][2]
+
+    return render_template('checkout.html', logged_in=True, name=escape(session['name']), email=escape(session['email']) ,checkoutItems=checkoutItems, usersCrditCards=usersCreditCards, numberOfItems=numberOfItems,total=total)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -84,8 +119,9 @@ def db_check():
     return render_template('db_check.html', version='\n'.join(version))
 
 @app.route('/RateAndComment', methods=['GET','POST'])
-def RateAndComment():
-    if request.method == 'POST':
+def RateAndComment(): 
+    #if request.method == 'POST':
+    if 'email' in session:
         product_id = request.form['product_id']
         email = session['email']
         rating = request.form['rating']
@@ -96,12 +132,15 @@ def RateAndComment():
           	values( ? , ? , ? , ? ) """, 
            	product_id,email,rating,comment)
             cursor.commit()
-            return render_template('RateAndComment.html')
+            #return render_template('RateAndComment.html')
+            return "Succes"
         except:
             cursor.rollback()
-            return render_template('RateAndComment.html', rating=rating, comment=comment)
+            #return render_template('RateAndComment.html', rating=rating, comment=comment)
+            return "Failed: tried commit to datbase"
     else:
-        return render_template('RateAndComment.html')
+        return "Failed: not logged in"
+        #return render_template('RateAndComment.html')
 
 
 
@@ -121,8 +160,10 @@ def ShoppingCart():
         product= cursor.fetchone()
         shoppingCart.append(product)
 
-    return render_template('ShoppingCart.html', haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
-
+    if 'email' in session:
+        return render_template('ShoppingCart.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
+    else:
+        return render_template('ShoppingCart.html', logged_in=False, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
 
 @app.route('/AddToCart', methods=['POST'])
 def AddToCart():
@@ -143,6 +184,15 @@ def DeleteFromCart():
     #tempCart =list(filter(lambda a: a != productId, tempCart))
     session["cartProduct"] = tempCart
     return "succes"
+
+
+def EasyMethod():
+    return ""
+
+
+@app.route('/Purchase', methods=['POST'])
+def Purchase():
+    return "done"
 
 
 ##################################################################################
