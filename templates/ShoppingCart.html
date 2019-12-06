@@ -29,14 +29,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                        {%for product in cartProduct%}
-                      <tr id="DeleteDivProduct{{ product.iProductId }}">
-                        <td>/somdest/{{product.iProductId}}.img</td>
-                        <td>{{product.cName}}</td>
-                        <td>{{product.cDescription}}</td>
-                        <td id="quantity{{ product.iProductId }}">x</td>
-                        <td id="price{{ product.iProductId }}">{{product.fUnitPrice|dkk}}</td>
-                        <td><button class="link" class="button" id="DeleteProduct{{ product.iProductId }}" value="{{ product.iProductId }}">-</button>
+                        {%for i in range(0,numberOfItems)%}
+                      <tr id="DeleteDivProduct{{ cartProduct[i][0].iProductId }}">
+                        <td>/somdest/{{cartProduct.iProductId}}.img</td>
+                        <td>{{cartProduct[i][0].cName}}</td>
+                        <td>{{cartProduct[i][0].cDescription}}</td>
+                        <td id="quantity{{ cartProduct[i][0].iProductId }}">{{cartProduct[i][1]}}</td>
+                        <td>{{cartProduct[i][0].fUnitPrice|dkk}}</td>
+                        <td><button class="link" class="button" id="DeleteProduct{{ cartProduct[i][0].iProductId }}" value="{{cartProduct[i][0].iProductId }}">-</button>
                         </td>
                       </tr>
 
@@ -52,16 +52,7 @@
 
                     
 <script>
-passUniqeProducts = '{{uniqeProducts|tojson}}';
-var uniqeProducts = JSON.parse(passUniqeProducts);
 
-$(document).ready(function (){
-    $.each(uniqeProducts, function(k, v) {
-    var $quantityElement = $("#quantity"+k);
-    var text = $quantityElement.text();
-    $quantityElement.text(text.replace(text, v+""));
-});
-});
 
 $(function() {
     $('[id^=DeleteProduct]').click(function() {

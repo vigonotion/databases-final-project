@@ -43,39 +43,12 @@ def search(query):
 def checkout():
     if not 'email' in session:
         return render_template('checkout.html', logged_in=False)
-    tempCart=session["cartProduct"]
-    counter=Counter(tempCart)
-    checkoutItems=[]
-    for product_id in counter:
-        cursor.execute("""
-            select * from TProduct
-            where iProductId = ?
-        """, product_id)
-        product= cursor.fetchone()
-        #pos 1 product object 
-        #pos 2 amount of products
-        #pos 3 total price of all of that product (pos1*pos2)
-        checkoutItems.append([product,counter[product_id],(counter[product_id]*product.fUnitPrice)])
-
+    checkoutItems=GetUniqueProducts()
     numberOfItems=len(checkoutItems)
-    cursor.execute("""
-        select iUserId from TUser
-        where cEmail = ?
-        """, escape(session['email']))
-
-    UserId=cursor.fetchone()[0]
-
-    cursor.execute("""
-        select cCreditCardNo from TCreditCard
-        where iUserId = ?
-        """, UserId )
-
-    usersCreditCards=cursor.fetchall()
-    print(usersCreditCards)
+    usersCreditCards=GetCreditCardsFromEmail(escape(session['email']))
     total=0
     for i in range(0,len(checkoutItems)):
         total=total+checkoutItems[i][2]
-
     return render_template('checkout.html', logged_in=True, name=escape(session['name']), email=escape(session['email']) ,checkoutItems=checkoutItems, usersCrditCards=usersCreditCards, numberOfItems=numberOfItems,total=total)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -142,28 +115,16 @@ def RateAndComment():
         return "Failed: not logged in"
         #return render_template('RateAndComment.html')
 
-
-
 @app.route("/ShoppingCart")
 def ShoppingCart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
-
-    tempCart=session["cartProduct"]
-    counter=Counter(tempCart)
-    shoppingCart=[]
-    for product_id in counter:
-        cursor.execute("""
-            select * from TProduct
-            where iProductId = ?
-        """, product_id)
-        product= cursor.fetchone()
-        shoppingCart.append(product)
-
+    shoppingCart=GetUniqueProducts()
+    numberOfItems=len(shoppingCart)
     if 'email' in session:
-        return render_template('ShoppingCart.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
+        return render_template('ShoppingCart.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, numberOfItems=numberOfItems)
     else:
-        return render_template('ShoppingCart.html', logged_in=False, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, uniqeProducts=counter)
+        return render_template('ShoppingCart.html', logged_in=False, haspurchases=True, cartProduct=shoppingCart, numberOfItems=numberOfItems)
 
 @app.route('/AddToCart', methods=['POST'])
 def AddToCart():
@@ -181,18 +142,53 @@ def DeleteFromCart():
     tempCart=session["cartProduct"]
     productId = request.get_json()
     tempCart.remove(productId)
-    #tempCart =list(filter(lambda a: a != productId, tempCart))
     session["cartProduct"] = tempCart
     return "succes"
 
 
-def EasyMethod():
-    return ""
-
-
 @app.route('/Purchase', methods=['POST'])
 def Purchase():
+    
+    
+
     return "done"
+
+
+#######################
+# methods
+#############
+
+#returns list of creditcards from user given their emil as parameters
+def GetCreditCardsFromEmail(email):
+    cursor.execute("""
+        select iUserId from TUser
+        where cEmail = ?
+        """, email)
+    UserId=cursor.fetchone()[0]
+    cursor.execute("""
+        select cCreditCardNo from TCreditCard
+        where iUserId = ?
+        """, UserId )
+    usersCreditCards=cursor.fetchall()
+    return usersCreditCards
+
+#returns a list containing uniqe products 
+#and the amount of those objects and the total price of all the objects    
+def GetUniqueProducts():
+    tempCart=session["cartProduct"]
+    counter=Counter(tempCart)
+    checkoutItems=[]
+    for product_id in counter:
+        cursor.execute("""
+            select * from TProduct
+            where iProductId = ?
+        """, product_id)
+        product= cursor.fetchone()
+        #pos 1 product object            | list[x][0]
+        #pos 2 amount of products        | list[x][1]
+        #pos 3 total price (pos1*pos2)   | list[x][2]
+        checkoutItems.append([product,counter[product_id],(counter[product_id]*product.fUnitPrice)])
+    return checkoutItems
 
 
 ##################################################################################

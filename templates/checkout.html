@@ -31,7 +31,7 @@
       <tbody>
           {%for i in range(0,numberOfItems)%}
         <tr>
-          <td><strong>1</strong></td>
+          <td><strong>{{i+1}}</strong></td>
           <td>{{checkoutItems[i][0].cName}}</td>
           <td>{{checkoutItems[i][1]}}</td>
           <td>{{checkoutItems[i][0].fUnitPrice|dkk}}</td>
