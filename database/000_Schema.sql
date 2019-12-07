@@ -29,6 +29,7 @@ CREATE TABLE TProduct(
 	cName VARCHAR(100) NOT NULL,
 	cDescription varchar(1400) NOT NULL,
 	fUnitPrice SMALLMONEY NOT NULL,
+	iQuantity INT NOT NULL,
 	fAverageRating numeric(3,2)
 	PRIMARY KEY(iProductId)
 	);
