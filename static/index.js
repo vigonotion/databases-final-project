@@ -36,12 +36,15 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
 $(function() {
     $('[id^=BuyProduct]').click(function() {
         productId=$(this).val()
-        console.log(productId)
+        amount = $(this).closest(".field").find('input[name=amount]').val()
+        console.log([productId, amount])
         $.ajax({
             url: '/AddToCart',
             contentType: 'application/json',
-            data: JSON.stringify(productId),
-            dataType : 'text',
+            data: JSON.stringify({
+                productId: productId,
+                amount: amount
+            }),
             type: 'POST',
             success: function(response) {
                 alert("Product was added to your cart");

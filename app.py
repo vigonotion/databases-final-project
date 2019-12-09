@@ -131,10 +131,16 @@ def AddToCart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
     tempCart=session["cartProduct"]
-    productId = request.get_json()
-    tempCart.append(productId)
+    json = request.get_json()
+    print(json)
+    productId = json["productId"]
+    amount = int(json["amount"])
+    
+    for i in range(amount):
+        tempCart.append(productId)
+
     session["cartProduct"] = tempCart
-    return "succes"
+    return "success"
 
 
 @app.route('/DeleteFromCart', methods=['POST'])
