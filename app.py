@@ -69,7 +69,8 @@ def search(query):
 @app.route("/checkout")
 def checkout():
     if not "email" in session:
-        return render_template("checkout.html", logged_in=False)
+        flash(u"You have to log in to make purchases.", "info")
+        return redirect(url_for("login"))
     checkoutItems = api.get_unique_products()
     numberOfItems = len(checkoutItems)
     usersCreditCards = api.get_credit_cards_from_email(escape(session["email"]))
@@ -165,15 +166,15 @@ def RateAndComment():
         # return render_template('RateAndComment.html')
 
 
-@app.route("/ShoppingCart")
-def ShoppingCart():
+@app.route("/cart")
+def cart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
     shoppingCart = api.get_unique_products()
     numberOfItems = len(shoppingCart)
     if "email" in session:
         return render_template(
-            "ShoppingCart.html",
+            "cart.html",
             logged_in=True,
             name=escape(session["name"]),
             email=escape(session["email"]),
@@ -183,7 +184,7 @@ def ShoppingCart():
         )
     else:
         return render_template(
-            "ShoppingCart.html",
+            "cart.html",
             logged_in=False,
             haspurchases=True,
             cartProduct=shoppingCart,
@@ -191,21 +192,13 @@ def ShoppingCart():
         )
 
 
-@app.route("/Purchase", methods=["POST"])
-def Purchase():
-
-    return "done"
-
-
-#######################
-# methods
-#############
-
 
 ##################################################################################
 # api
 ##################################################################################
-
+@app.route("/api/cart/purchase", methods=["POST"])
+def purchase():
+    pass
 
 @app.route("/api/cart", methods=["POST"])
 def cart_add():
