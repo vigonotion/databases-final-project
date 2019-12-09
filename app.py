@@ -213,3 +213,5 @@ def product_ratings(product_id):
 @app.template_filter()
 def dkk(value):
     return "{:.2f} kr.".format(value)
+
+
