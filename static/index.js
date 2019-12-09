@@ -35,9 +35,10 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
 
 $(function() {
     $('[id^=BuyProduct]').click(function() {
-        productId=$(this).val()
-        amount = $(this).closest(".field").find('input[name=amount]').val()
-        console.log([productId, amount])
+        var amountField = $(this).closest(".field").find('input[name=amount]');
+
+        var productId=$(this).val()
+        var amount = amountField.val()
         $.ajax({
             url: '/AddToCart',
             contentType: 'application/json',
@@ -48,6 +49,8 @@ $(function() {
             type: 'POST',
             success: function(response) {
                 alert("Product was added to your cart");
+
+                amountField.val(1);
             },
             error: function(error) {
                 alert("Oh no somthing went wrong! your product was not added");
