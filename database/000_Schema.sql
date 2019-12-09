@@ -5,9 +5,10 @@ GO
 
 
 CREATE TABLE TCity(
+	iCityId SMALLINT IDENTITY NOT NULL,
 	cZipCode CHAR(4) NOT NULL,
-	cCity VARCHAR(100) NOT NULL,
-	PRIMARY KEY(cZipCode)	
+	cCity VARCHAR(50) NOT NULL,
+	PRIMARY KEY(iCityId)	
 )
 
 CREATE TABLE TUser(
@@ -16,18 +17,18 @@ CREATE TABLE TUser(
 	cFirstName VARCHAR(100) NOT NULL,
 	cLastName VARCHAR(100) NOT NULL,
 	cAddress VARCHAR(100) NOT NULL,
-	cZipCode CHAR(4) NOT NULL,
+	iCityId SMALLINT NOT NULL,
 	cPhoneNo CHAR(8) NOT NULL,
 	fTotalPaid MONEY,
 	PRIMARY KEY(iUserId),
-	FOREIGN KEY(cZipCode) REFERENCES TCity
+	FOREIGN KEY(iCityId) REFERENCES TCity
 	);
 
 
 CREATE TABLE TProduct(
 	iProductId INT IDENTITY NOT NULL,
 	cName VARCHAR(100) NOT NULL,
-	cDescription varchar(1400) NOT NULL,
+	cDescription VARCHAR(1400) NOT NULL,
 	fUnitPrice SMALLMONEY NOT NULL,
 	iQuantity INT NOT NULL,
 	fAverageRating numeric(3,2)
@@ -45,13 +46,14 @@ CREATE TABLE TRating(
 	);
 
 CREATE TABLE TCreditCard(
-	--check credit card length IN DENMARK
-	cCreditCardNo CHAR(16) NOT NULL,
-	iUserId int NOT NULL,
+	--https://en.wikipedia.org/wiki/Payment_card_number
+	iCardId INT NOT NULL,
+	iUserId INT NOT NULL,
+	cCreditCardNo VARCHAR(19) NOT NULL,
 	cCardholderName VARCHAR(200),
 	cExpiration DATE NOT NULL,
 	cCCV NUMERIC(3,0) NOT NULL,
-	PRIMARY KEY(cCreditCardNo),
+	PRIMARY KEY(iCardId),
 	FOREIGN KEY(iUserId) REFERENCES TUser
 	);
 
@@ -60,11 +62,11 @@ CREATE TABLE TInvoice(
 	dDate DATETIME2 NOT NULL,
 	iVat NUMERIC(2,0) NOT NULL,
 	fTotalPrice MONEY NOT NULL,
-	iUserId int NOT NULL,
-	cCreditCardNo CHAR(16) NOT NULL,
+	iUserId INT NOT NULL,
+	iCardId INT NOT NULL,
 	PRIMARY KEY(iInvoiceId),
 	FOREIGN KEY(iUserId) REFERENCES TUser,
-	FOREIGN KEY(cCreditCardNo) REFERENCES TCreditCard
+	FOREIGN KEY(iCardId) REFERENCES TCreditCard
 	);
 
 CREATE TABLE TInvoiceLine(
