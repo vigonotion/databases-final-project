@@ -2,12 +2,14 @@ from flask import Flask, render_template, session, escape, request, redirect, ur
 from dotenv import load_dotenv
 import os
 import db
-from collections import Counter
+from api import Api
 
 load_dotenv(verbose=True)
 app = Flask(__name__)
 app.secret_key = os.environ['APP_SECRET_KEY']
 cursor = db.connect().cursor()
+
+api = Api(cursor, session)
 
 @app.route('/')
 def index():
@@ -43,9 +45,9 @@ def search(query):
 def checkout():
     if not 'email' in session:
         return render_template('checkout.html', logged_in=False)
-    checkoutItems=GetUniqueProducts()
+    checkoutItems=api.GetUniqueProducts()
     numberOfItems=len(checkoutItems)
-    usersCreditCards=GetCreditCardsFromEmail(escape(session['email']))
+    usersCreditCards=api.GetCreditCardsFromEmail(escape(session['email']))
     total=0
     for i in range(0,len(checkoutItems)):
         total=total+checkoutItems[i][2]
@@ -164,37 +166,6 @@ def Purchase():
 # methods
 #############
 
-#returns list of creditcards from user given their emil as parameters
-def GetCreditCardsFromEmail(email):
-    cursor.execute("""
-        select iUserId from TUser
-        where cEmail = ?
-        """, email)
-    UserId=cursor.fetchone()[0]
-    cursor.execute("""
-        select cCreditCardNo from TCreditCard
-        where iUserId = ?
-        """, UserId )
-    usersCreditCards=cursor.fetchall()
-    return usersCreditCards
-
-#returns a list containing uniqe products 
-#and the amount of those objects and the total price of all the objects    
-def GetUniqueProducts():
-    tempCart=session["cartProduct"]
-    counter=Counter(tempCart)
-    checkoutItems=[]
-    for product_id in counter:
-        cursor.execute("""
-            select * from TProduct
-            where iProductId = ?
-        """, product_id)
-        product= cursor.fetchone()
-        #pos 1 product object            | list[x][0]
-        #pos 2 amount of products        | list[x][1]
-        #pos 3 total price (pos1*pos2)   | list[x][2]
-        checkoutItems.append([product,counter[product_id],(counter[product_id]*product.fUnitPrice)])
-    return checkoutItems
 
 
 ##################################################################################
