@@ -44,10 +44,10 @@ $(function() {
             dataType : 'text',
             type: 'POST',
             success: function(response) {
-                alert("Product was added to ur cart");
+                alert("Product was added to your cart");
             },
             error: function(error) {
-                alert("Oh no somthing went wrong! ur product was not added");
+                alert("Oh no somthing went wrong! your product was not added");
             }
         });
     });

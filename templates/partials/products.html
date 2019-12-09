@@ -22,9 +22,14 @@
 
                             <h3>{{ product.fUnitPrice|dkk }}</h3>
 
+                             <button class="button" id="BuyProduct{{ product.iProductId }}" value="{{ product.iProductId }}">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </span>
+                                    <span>Add to cart</span>
+                                    </button>
+
                             <br>
-                            <button class="link" class="button" id="BuyProduct{{ product.iProductId }}" value="{{ product.iProductId }}">+</button>
-                             Buy product
                             <br>
 
                             {% if product.fAverageRating == None %}
