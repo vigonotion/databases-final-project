@@ -3,7 +3,6 @@
 
 {% block content %}
 <section class="section">
-  {% if logged_in %}
   <div class="container">
 
 
@@ -63,13 +62,5 @@
       <a class="button is-primary">Purchase now</a>
     </div>
   </div>
-
-  {%else%}
-  <div>
-    <h1>You need to login to make Purchases!!</h1>
-  </div>
-  {%endif%}
-
-
 </section>
 {% endblock %}

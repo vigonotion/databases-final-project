@@ -32,9 +32,11 @@ if choice == 1:
     try:
         connection = db.connect()
     except Exception:
-        print("""
+        print(
+            """
             Failed to connect to the database. Please check:
             - your credentials inside .env file are correct
             - a database with the name in the .env file exists
             - the database server is running
-        """)
+        """
+        )

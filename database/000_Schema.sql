@@ -30,15 +30,15 @@ CREATE TABLE TProduct(
 	cName VARCHAR(100) NOT NULL,
 	cDescription VARCHAR(1400) NOT NULL,
 	fUnitPrice SMALLMONEY NOT NULL,
-	iQuantity INT NOT NULL,
-	fAverageRating numeric(3,2)
+	iQuantity INT,
+	fAverageRating numeric(3,2),
 	PRIMARY KEY(iProductId)
 	);
 
 CREATE TABLE TRating(
 	iProductId INT NOT NULL,
 	iUserId int NOT NULL,
-	iRating NUMERIC(1,0) NOT NULL,
+	iRating NUMERIC(1,0),
 	cComment VARCHAR(1400),
 	PRIMARY KEY(iProductId, iUserId),
 	FOREIGN KEY(iProductId) REFERENCES TProduct,
