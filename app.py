@@ -45,9 +45,9 @@ def search(query):
 def checkout():
     if not 'email' in session:
         return render_template('checkout.html', logged_in=False)
-    checkoutItems=api.GetUniqueProducts()
+    checkoutItems=api.get_unique_products()
     numberOfItems=len(checkoutItems)
-    usersCreditCards=api.GetCreditCardsFromEmail(escape(session['email']))
+    usersCreditCards=api.get_credit_cards_from_email(escape(session['email']))
     total=0
     for i in range(0,len(checkoutItems)):
         total=total+checkoutItems[i][2]
@@ -121,7 +121,7 @@ def RateAndComment():
 def ShoppingCart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
-    shoppingCart=GetUniqueProducts()
+    shoppingCart=api.get_unique_products()
     numberOfItems=len(shoppingCart)
     if 'email' in session:
         return render_template('ShoppingCart.html', logged_in=True, name=escape(session['name']), email=escape(session['email']), haspurchases=True, cartProduct=shoppingCart, numberOfItems=numberOfItems)

@@ -6,8 +6,9 @@ class Api:
         self.cursor = cursor
         self.session = session
 
-    #returns list of creditcards from user given their emil as parameters
-    def GetCreditCardsFromEmail(self, email):
+    def get_credit_cards_from_email(self, email):
+        """returns a list of credit cards from a user given their email as parameter"""
+
         self.cursor.execute("""
             select iUserId from TUser
             where cEmail = ?
@@ -20,9 +21,10 @@ class Api:
         usersCreditCards=self.cursor.fetchall()
         return usersCreditCards
 
-    #returns a list containing uniqe products 
-    #and the amount of those objects and the total price of all the objects    
-    def GetUniqueProducts(self):
+    def get_unique_products(self):
+        """
+        returns a list containing uniqe products and the amount of those objects and the total price of all the objects  
+        """
         tempCart=self.session["cartProduct"]
         counter=Counter(tempCart)
         checkoutItems=[]
