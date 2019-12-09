@@ -2,53 +2,89 @@
 {% block title %}Checkout{% endblock %}
 
 {% block content %}
-<div class="container is-fluid">
 
-    <section class="section">
-        <div class="container">
-            {% if haspurchases%}
-            <nav class="level">
-                    <div class="level-item has-text-centered">
-                        <a href="/"><button class="link is-info">Buy more</button></a>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <a href="/checkout"><button class="link is-info">Checkout</button></a>
-                    </div>
-                  </nav>
 
-            <h2 class="title has-text-centered">Your Shopping Chart</h2>
-            <table class="table" width="100%">
-                    <thead>
-                      <tr>
-                        <th width="10%"><abbr title="Image">IMG</abbr></th>
-                        <th width="10%"><abbr title="Name">Name</abbr></th>
-                        <th width="35%"><abbr title="Description"> Description</abbr></th>
-                        <th width="15%"><abbr title="Amount">Quantity</abbr></th>
-                        <th width="15%"><abbr title="Price">Price</abbr></th>
-                        <th width="15%"><abbr title="Delete">Remove</abbr></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {%for i in range(0,numberOfItems)%}
-                      <tr id="DeleteDivProduct{{ cartProduct[i][0].iProductId }}">
-                        <td>/somdest/{{cartProduct.iProductId}}.img</td>
-                        <td>{{cartProduct[i][0].cName}}</td>
-                        <td>{{cartProduct[i][0].cDescription}}</td>
-                        <td id="quantity{{ cartProduct[i][0].iProductId }}">{{cartProduct[i][1]}}</td>
-                        <td>{{cartProduct[i][0].fUnitPrice|dkk}}</td>
-                        <td><button class="link" class="button" id="DeleteProduct{{ cartProduct[i][0].iProductId }}" value="{{cartProduct[i][0].iProductId }}">-</button>
-                        </td>
-                      </tr>
 
-                      {%endfor%}
-                    </tbody>
-                </table>
-            {% else %}
-                <h2 class="title has-text-centered">You got no items in ur chart. get back out there and shop away!</h2>
-            {% endif %}
-        </div>
-    </section>
+<section class="section">
+
+    <div class="container">
+
+
+        <h1 class="title">
+          Your Shopping Cart
+        </h1>
+      </div>
+
+      <br><br>
+
+    <div class="container">
+        {% if haspurchases%}
+
+        <table class="table" width="100%">
+                <thead>
+                    <tr>
+                    <th width="10%"><abbr title="Image">IMG</abbr></th>
+                    <th width="10%"><abbr title="Name">Name</abbr></th>
+                    <th width="40%"><abbr title="Description"> Description</abbr></th>
+                    <th width="15%"><abbr title="Amount">Quantity</abbr></th>
+                    <th width="10%"><abbr title="Unit Price">Unit Price</abbr></th>
+                    <th width="10%"><abbr title="Total Price">Total Price</abbr></th>
+                    <th width="5%"><abbr title="Delete">Remove</abbr></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for i in range(0,numberOfItems)%}
+                    <tr id="DeleteDivProduct{{ cartProduct[i][0].iProductId }}">
+                    <td>/somdest/{{cartProduct.iProductId}}.img</td>
+                    <td>{{cartProduct[i][0].cName}}</td>
+                    <td>{{cartProduct[i][0].cDescription}}</td>
+                    <td id="quantity{{ cartProduct[i][0].iProductId }}">{{cartProduct[i][1]}}</td>
+                    <td>{{cartProduct[i][0].fUnitPrice|dkk}}</td>
+                    <td>{{cartProduct[i][2]|dkk}}</td>
+                    <td>
+
+                        <button class="button" id="DeleteProduct{{ cartProduct[i][0].iProductId }}" value="{{cartProduct[i][0].iProductId }}">
+                            <span class="icon is-small">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            </button>
+
+                    </td>
+                    </tr>
+
+                    {%endfor%}
+                </tbody>
+            </table>
+
+<div class="level">
+    <div class="level-left">
+
+    </div>
+<div class="level-right">
+        <div class="field is-grouped level-item">
+
+                <p class="control">
+                        <a class="button" href="/">
+                          Buy more items
+                        </a>
+                      </p>
+                <p class="control">
+                  <a class="button is-link" href="/checkout">
+                    Checkout
+                  </a>
+                </p>
+              </div>
 </div>
+
+</div>
+
+            
+
+        {% else %}
+            <h2 class="title has-text-centered">You got no items in your cart. get back out there and shop away!</h2>
+        {% endif %}
+    </div>
+</section>
 
                     
 <script>

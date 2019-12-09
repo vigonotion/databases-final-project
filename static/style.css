@@ -1,3 +1,11 @@
 .rate-star.is-hover {
     color: #ffbf00;
 }
+
+footer {
+    margin-top: 24px;
+}
+
+#content {
+    min-height: 90vh;
+}
