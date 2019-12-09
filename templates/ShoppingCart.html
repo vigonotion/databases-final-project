@@ -94,11 +94,11 @@ $(function() {
     $('[id^=DeleteProduct]').click(function() {
         productId=$(this).val()
         $.ajax({
-            url: '/DeleteFromCart',
+            url: '/api/cart',
             contentType: 'application/json',
             data: JSON.stringify(productId),
             dataType : 'text',
-            type: 'POST',
+            type: 'DELETE',
             success: function(response) {
                 var $quantityElement = $("#quantity"+productId)
                 var oldText = $quantityElement.text();

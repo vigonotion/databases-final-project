@@ -40,7 +40,7 @@ $(function() {
         var productId=$(this).val()
         var amount = amountField.val()
         $.ajax({
-            url: '/AddToCart',
+            url: '/api/cart',
             contentType: 'application/json',
             data: JSON.stringify({
                 productId: productId,
