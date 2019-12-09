@@ -55,7 +55,6 @@ def search_empty():
         )
     return render_template("partials/products.html", products=products)
 
-
 @app.route("/search/<query>")
 def search(query):
     sql = "SELECT * FROM TProduct WHERE cName LIKE '%{}%'".format(query)
@@ -64,6 +63,25 @@ def search(query):
     products = cursor.fetchall()
 
     return render_template("partials/search.html", query=query, products=products)
+
+
+@app.route("/advanced_search")
+def advanced_search():
+
+    qTitle = request.args.get("qTitle", "")
+    qDescription = request.args.get("qDescription", "")
+
+    if qTitle != "" and qDescription == "":
+        cursor.execute("select * from TProduct where cName LIKE ?", "%{}%".format(qTitle))
+    elif qTitle != "" and qDescription != "":
+        cursor.execute("select * from TProduct where cName LIKE ? and cDescription LIKE ?", "%{}%".format(qTitle), "%{}%".format(qDescription))
+    elif qTitle == "" and qDescription != "":
+        cursor.execute("select * from TProduct where cDescription LIKE ?", "%{}%".format(qDescription))
+    else:
+        cursor.execute("select * from TProduct")
+
+    products = cursor.fetchall()
+    return render_template("advanced_search.html", products=products)
 
 
 @app.route("/checkout")
