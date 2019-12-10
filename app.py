@@ -190,6 +190,11 @@ def cart():
         session["cartProduct"] = []
     shoppingCart = api.get_unique_products()
     numberOfItems = len(shoppingCart)
+    
+    total = 0
+    for i in range(0, len(shoppingCart)):
+        total = total + shoppingCart[i][2]
+
     if "email" in session:
         return render_template(
             "cart.html",
@@ -199,6 +204,7 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
+            total=total
         )
     else:
         return render_template(
@@ -207,6 +213,7 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
+            total=total
         )
 
 
