@@ -40,7 +40,7 @@
                     <td>{{cartProduct[i][0].cDescription}}</td>
                     <td id="quantity{{ cartProduct[i][0].iProductId }}">{{cartProduct[i][1]}}</td>
                     <td>{{cartProduct[i][0].fUnitPrice|dkk}}</td>
-                    <td>{{cartProduct[i][2]|dkk}}</td>
+                    <td id="amount{{ cartProduct[i][0].iProductId }}">{{cartProduct[i][2]|dkk}}</td>
                     <td>
 
                         <button class="button" id="DeleteProduct{{ cartProduct[i][0].iProductId }}" value="{{cartProduct[i][0].iProductId }}">
@@ -58,7 +58,7 @@
 
 <div class="level">
     <div class="level-left">
-            <p>Total: <b>{{total|dkk}}</b></p>
+            <p>Total: <b id="total">{{total|dkk}}</b></p>
     </div>
 <div class="level-right">
         <div class="field is-grouped level-item">
@@ -101,14 +101,31 @@ $(function() {
             type: 'DELETE',
             success: function(response) {
                 var $quantityElement = $("#quantity"+productId)
-                var oldText = $quantityElement.text();
-                var textVal = parseInt($quantityElement.text());
-                if (textVal != 1){
-                    textVal=textVal-1
-                    $quantityElement.text(oldText.replace(oldText, textVal+""))
+                var oldQuantityText = $quantityElement.text();
+                var QuantitytextVal = parseInt($quantityElement.text());
+
+                var $amountElement = $("#amount"+productId)
+                var oldamountText = $amountElement.text();
+                var amounttextVal = parseInt($amountElement.text());
+
+                var onesPrice=amounttextVal/QuantitytextVal
+
+                if (QuantitytextVal != 1){
+                    QuantitytextVal=QuantitytextVal-1
+                    $quantityElement.text(oldQuantityText.replace(oldQuantityText, QuantitytextVal+""))
                 }else{
                     $("#DeleteDivProduct"+productId).remove()
                 }
+
+                amounttextVal=onesPrice*QuantitytextVal
+                $amountElement.text(oldamountText.replace(oldamountText, amounttextVal+".00 kr."))
+                
+                var $totalElement = $("#total")
+                var oldtotalText = $totalElement.text();
+                var totaltextVal = parseInt($totalElement.text());                
+                totaltextVal = totaltextVal- onesPrice
+                $totalElement.text(oldtotalText.replace(oldtotalText, totaltextVal+".00 kr."))
+           
 
             },
             error: function(error) {
