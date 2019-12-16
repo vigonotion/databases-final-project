@@ -36,7 +36,7 @@ BEGIN
 	DECLARE @oldFirstName VARCHAR(100)
 	DECLARE @oldLastName VARCHAR(100)
 	DECLARE @oldAddress VARCHAR(100)
-	DECLARE @oldZipcode CHAR(4)
+	DECLARE @oldZipCode CHAR(4)
 	DECLARE @oldPhone CHAR(8)
 	DECLARE @oldTotalPaid MONEY
 
@@ -45,7 +45,7 @@ BEGIN
 	DECLARE @firstName VARCHAR(100)
 	DECLARE @lastName VARCHAR(100)
 	DECLARE @address VARCHAR(100)
-	DECLARE @zipcode CHAR(4)
+	DECLARE @zipCode CHAR(4)
 	DECLARE @phone CHAR(8)
 	DECLARE @totalPaid MONEY
 
@@ -63,7 +63,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipcode = cZipcode,
+			@zipCode = cZipcode,
 			@totalPaid = ftotalPaid
 	FROM inserted
 	SELECT	@oldUserId = iUserId,
@@ -71,7 +71,7 @@ BEGIN
 			@oldFirstName = cFirstName,
 			@oldLastName = cLastName,
 			@oldAddress = cAddress,
-			@oldZipcode = cZipcode,
+			@oldZipcode = cZipCode,
 			@phone = cPhoneNo,
 			@oldTotalPaid = ftotalPaid
 	FROM deleted
@@ -85,7 +85,7 @@ BEGIN
 	VALUES (@oldUserId, @oldEmail, @oldFirstName, @oldLastName,
 			@oldAddress, @oldZipcode, @oldPhone, @oldTotalPaid,
 			@userId, @email, @firstName, @lastName,
-			@address, @zipcode, @phone, @totalPaid,
+			@address, @zipCode, @phone, @totalPaid,
 			@ddl, @dbUser, @date)
 	END
 
@@ -97,7 +97,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipcode = cZipcode,
+			@zipCode = cZipCode,
 			@phone = cPhoneNo,
 			@totalPaid = ftotalPaid
 	FROM inserted
@@ -106,7 +106,7 @@ BEGIN
 						cNewLastName, cNewAddress, cNewZipcode, 
 						cNewPhoneNo, fNewTotalPaid, cDdl, cUser, dDate) 
 	VALUES (@userId, @email, @firstName, @lastName,
-			@address, @zipcode, @phone, @totalPaid,
+			@address, @zipCode, @phone, @totalPaid,
 			@ddl, @dbUser, @date)
 	END
 
@@ -118,7 +118,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipcode = cZipcode,
+			@zipCode = cZipCode,
 			@phone = cPhoneNo,
 			@totalPaid = ftotalPaid
 	FROM deleted
@@ -127,7 +127,7 @@ BEGIN
 						cOldLastName, cOldAddress, cOldZipcode, 
 						cOldPhoneNo, fOldTotalPaid, cDdl, cUser, dDate) 
 	VALUES (@userId, @email, @firstName, @lastName,
-			@address, @zipcode, @phone, @totalPaid,
+			@address, @zipCode, @phone, @totalPaid,
 			@ddl, @dbUser, @date)
 	END
 
