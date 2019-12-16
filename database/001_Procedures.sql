@@ -10,6 +10,7 @@ begin
     where iProductId = @iProductId
 
 end
+go
 
 -- calculates product in stock
 create procedure ProductinStock(@iProductId INT) as
@@ -23,6 +24,8 @@ begin
     where iProductId = @iProductId
 
 end
+go
+
 -- calculates total bill in invoice
 create procedure Totalmoney(@iInvoiceId INT) as
 begin
@@ -32,6 +35,7 @@ begin
     where iInvoiceId =@iInvoiceId
 
 end
+go
 
 -- calculates the user total paid
 create procedure Totalpaid(@iUserId INT) as
@@ -42,3 +46,4 @@ begin
     where iUserId =@iUserId
 
 end
+go
