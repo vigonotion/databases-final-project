@@ -264,34 +264,33 @@ def product_ratings(product_id):
     )
 
     ratings = cursor.fetchall()
-    return render_template("partials/ratings.html", ratings=ratings)
+    return render_template("partials/ratings.html", ratings=ratings, product_id=product_id)
 
 @app.route("/api/products/<int:product_id>/ratings", methods=["POST"])
-def rate():
+def rate(product_id):
     if "email" in session:
-        email = session["email"]
+        id = session["id"]
         rating = request.form["rating"]
         comment = request.form["comment"]
-        # try save changes to DB or send user back to page with the users inputs
-        try:
-            cursor.execute(
-                """ insert into TRating (iProduct_id,cEmail,iRating,cComment) 
-          	values( ? , ? , ? , ? ) """,
+        
+        cursor.execute(
+                """
+                insert into TRating (iProductId,iUserId,iRating,cComment) 
+          	    values( ? , ? , ? , ? )
+                """,
                 product_id,
-                email,
+                id,
                 rating,
                 comment,
             )
-            cursor.commit()
-            # return render_template('RateAndComment.html')
-            return "Succes"
-        except:
-            cursor.rollback()
-            # return render_template('RateAndComment.html', rating=rating, comment=comment)
-            return "Failed: tried commit to datbase"
+        cursor.commit()
+
+        flash(u"Your rating has been saved.", "success")
+        return redirect(url_for("index"))
+
     else:
-        return "Failed: not logged in"
-        # return render_template('RateAndComment.html')
+        flash(u"Please log in to rate a product.", "danger")
+        return redirect(url_for("index"))
 
 
 
