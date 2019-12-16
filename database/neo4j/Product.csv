@@ -1,0 +1,25 @@
+iProductId,cName,cDescription,fUnitPrice,iQuantity,fAverageRating
+1,Sunscreen,Protects your skin from dangerous uv radiation,1.290.000,254,2.00
+2,Ration,Dont wanna cook? no problem,300.000,119,4.00
+3,Shampoo travel size,specially formulated for dry hair. Enriched with key ingredient extracts for their enriching properties. It leaves your hair manageable and soft.,1.940.000,185,NULL
+4,Water bottle,500ml. Hydrate,1.000.000,288,3.00
+5,Sun glasses,"Daytona features UV400 protective durable drop-tested lens, polycarbonate frames and is packaged with protective film on lens. Complies with ANSI, Prop 65. 5.75"" L x 5.875"" W x 1.875"" H",20.000.000,249,2.50
+6,Plants,Bring you back to nature,600.000,285,2.16
+7,Hat,Wool,3.000.000,256,2.67
+8,Wireless headphone,"noise cancelling, 30 hrs playing time, high quality built in microphone",21.000.000,286,3.33
+9,Cords,Omnis.,300.000,294,3.00
+10,Goretex Jacket,Water and wind proof,45.000.000,297,1.33
+11,Gloves,Comfortable and warm,1.500.000,298,3.33
+12,Pants,"Black pants, stylish",500.000,297,2.00
+13,Bammboo cutlery set,"Eco friendly, comfortable texture, perfect for travel",1.000.000,294,2.50
+14,Power bank,provide ener,2.000.000,300,NULL
+15,Fire extinguisher,"ABC Powder Type (Stored Pressure) Fire Extinguisher, Multipurpose uses & Multipurpose uses ABC Type Fire Extinguisher capacity-4 Kg, with 5 years warranty.No Maintenance required, Clear Instruction Label & No Maintenance, ISI, BIS Mark, ISO & CE Certified Product",20.000.000,251,1.50
+16,Outdoor shoes,Keeps your feet dry,6.000.000,251,NULL
+17,Utility Knife,"Quick-Change Folding Lockback Knife - Ideal for General-Purpose Cutting
+Quick-Change Blade Replacement Mechanism - Provides Easy Blade Switch
+Aviation-Grade Aluminum Handle Ensures Durability | Stainless Steel Belt Clip | Blade Release",9.000.000,287,2.00
+18,Umbrella,"Compact and lightweight, wind-defying, double vented",1.000.000,265,3.50
+19,Bike flashlight,Light your way,600.000,285,3.00
+20,Flashlight,Shine in the dark,3.000.000,272,4.00
+21,Walking stick,Move twice as fast,7.000.000,290,NULL
+22,Card strap,Keeping things close to you,200.000,300,NULL

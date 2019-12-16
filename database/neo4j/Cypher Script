@@ -1,0 +1,32 @@
+1. Install Neo4j
+2. Import csv files to Neo4j installation folder "\.Neo4jDesktop\neo4jDatabases\database-ce28a49d-1aa3-4281-a55b-abb6845cc214\installation-3.5.12\import"
+
+
+CYPHER COMMAND:
+--Create user nodes
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///User.csv" AS row
+CREATE (:User {userID: row.iUserId,useremail: row.cEmail, userFirstName: row.cFirstName,userLastName:row.cLastName,userAdress:row.cAddress,cityID:row.iCityId,userPhonenumber:row.cPhoneNo,userTotalPaid:row.fTotalPaid});
+
+--Create city nodes
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///City.csv" AS row
+CREATE (:City {cityID: row.iCityId,cityZipCode: row.cZipCode, cityName: row.cCity});
+
+--Create product nodes
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM "file:///Product.csv" AS row
+CREATE (:Product {productID: row.iProductId,productName: row.cName, productDescription: row.cDescription,productUnitPrice:row.fUnitPrice,productQuantity:row.iQuantity,productAverageRating:row.fAverageRating});
+
+--Create relationship "User rated products"
+LOAD CSV WITH HEADERS FROM "file:///Rating.csv" AS row
+MATCH (user:User {userID: row.iUserId})
+MATCH (product:Product {productID: row.iProductId})
+CREATE (user)-[r:RATED]->(product)
+SET r.rating =row.iRating
+
+--Create relationship "User lives in city"
+LOAD CSV WITH HEADERS FROM "file:///User.csv" AS row
+MATCH (user:User {userID: row.iUserId})
+MATCH (city:City {cityID: row.iCityId})
+CREATE (user)-[r:LIVES_IN]->(city)
