@@ -181,37 +181,6 @@ def db_check():
         row = cursor.fetchone()
     return render_template("db_check.html", version="\n".join(version))
 
-
-@app.route("/RateAndComment", methods=["GET", "POST"])
-def RateAndComment():
-    # if request.method == 'POST':
-    if "email" in session:
-        product_id = request.form["product_id"]
-        email = session["email"]
-        rating = request.form["rating"]
-        comment = request.form["comment"]
-        # try save changes to DB or send user back to page with the users inputs
-        try:
-            cursor.execute(
-                """ insert into TRating (iProduct_id,cEmail,iRating,cComment) 
-          	values( ? , ? , ? , ? ) """,
-                product_id,
-                email,
-                rating,
-                comment,
-            )
-            cursor.commit()
-            # return render_template('RateAndComment.html')
-            return "Succes"
-        except:
-            cursor.rollback()
-            # return render_template('RateAndComment.html', rating=rating, comment=comment)
-            return "Failed: tried commit to datbase"
-    else:
-        return "Failed: not logged in"
-        # return render_template('RateAndComment.html')
-
-
 @app.route("/cart")
 def cart():
     if "cartProduct" not in session:
@@ -296,6 +265,34 @@ def product_ratings(product_id):
 
     ratings = cursor.fetchall()
     return render_template("partials/ratings.html", ratings=ratings)
+
+@app.route("/api/products/<int:product_id>/ratings", methods=["POST"])
+def rate():
+    if "email" in session:
+        email = session["email"]
+        rating = request.form["rating"]
+        comment = request.form["comment"]
+        # try save changes to DB or send user back to page with the users inputs
+        try:
+            cursor.execute(
+                """ insert into TRating (iProduct_id,cEmail,iRating,cComment) 
+          	values( ? , ? , ? , ? ) """,
+                product_id,
+                email,
+                rating,
+                comment,
+            )
+            cursor.commit()
+            # return render_template('RateAndComment.html')
+            return "Succes"
+        except:
+            cursor.rollback()
+            # return render_template('RateAndComment.html', rating=rating, comment=comment)
+            return "Failed: tried commit to datbase"
+    else:
+        return "Failed: not logged in"
+        # return render_template('RateAndComment.html')
+
 
 
 ##################################################################################

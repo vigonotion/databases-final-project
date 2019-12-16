@@ -35,16 +35,9 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
 
 $(function() {
     $('[id^=BuyProduct]').click(function() {
-<<<<<<< HEAD
-        var amountField = $(this).closest(".field").find('input[name=amount]');
-
-        var productId=$(this).val()
-        var amount = amountField.val()
-=======
         productId=$(this).val()
         amount = $(this).closest(".field").find("input[name=amount]").val()
         console.log(productId)
->>>>>>> 6d1fabc6c11ae6633963aaa68ae296f541302a80
         $.ajax({
             url: '/api/cart',
             contentType: 'application/json',
@@ -52,10 +45,7 @@ $(function() {
                 productId: productId,
                 amount: amount
             }),
-<<<<<<< HEAD
-=======
             dataType : 'text',
->>>>>>> 6d1fabc6c11ae6633963aaa68ae296f541302a80
             type: 'POST',
             success: function(response) {
                 alert("Product was added to your cart");
