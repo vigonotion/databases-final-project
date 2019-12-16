@@ -1,49 +1,47 @@
 -- calculates the average rating for a product based on all ratings.
-create procedure SetAvgProductRating (@iProductId INT) as
-begin
-
-    set nocount on
-    update TProduct
-    set fAverageRating = (
-        select avg(iRating) from TRating where iProductId = @iProductId group by iProductId
+CREATE PROCEDURE SetAvgProductRating (@iProductId INT) AS
+BEGIN
+    SET NOCOUNT ON
+    UPDATE TProduct
+    SET fAverageRating = (
+        SELECT avg(iRating) FROM TRating WHERE iProductId = @iProductId GROUP BY iProductId
     )
-    where iProductId = @iProductId
+    WHERE iProductId = @iProductId
 
-end
-go
+END
+GO
 
 -- calculates product in stock
-create procedure ProductinStock(@iProductId INT) as
-begin
-
-    set nocount on
-    update TProduct
-    set iQuantity = iQuantity-(
-        select sum(iQuantity) from TInvoiceLine where iProductId = @iProductId group by iProductId
+CREATE PROCEDURE ProductinStock(@iProductId INT) AS
+BEGIN
+	SET NOCOUNT ON
+    UPDATE TProduct
+    SET iQuantity = iQuantity-(
+        SELECT sum(iQuantity) FROM TInvoiceLine WHERE iProductId = @iProductId GROUP BY iProductId
     )
-    where iProductId = @iProductId
+    WHERE iProductId = @iProductId
 
-end
-go
+END
+GO
 
 -- calculates total bill in invoice
-create procedure Totalmoney(@iInvoiceId INT) as
-begin
-    set nocount on
-    update TInvoice
-    set fTotalPrice = (select sum(fPrice) from TInvoiceLine where iInvoiceId = @iInvoiceId group by iInvoiceId)
-    where iInvoiceId =@iInvoiceId
+CREATE PROCEDURE Totalmoney(@iInvoiceId INT) AS
+BEGIN
+    SET NOCOUNT ON
+    UPDATE TInvoice
+    SET fTotalPrice = (select sum(fPrice) FROM TInvoiceLine WHERE iInvoiceId = @iInvoiceId GROUP BY iInvoiceId)
+    WHERE iInvoiceId =@iInvoiceId
 
-end
-go
+END
+GO
 
 -- calculates the user total paid
-create procedure Totalpaid(@iUserId INT) as
-begin
-    set nocount on
-    update TUser
-    set fTotalPaid = (select sum(fTotalPrice) from TInvoice where iUserId = @iUserId group by iUserId)
-    where iUserId =@iUserId
+CREATE PROCEDURE Totalpaid(@iUserId INT) AS
+BEGIN
+    SET NOCOUNT ON
+    UPDATE TUser
+    SET fTotalPaid = (select sum(fTotalPrice) FROM TInvoice WHERE iUserId = @iUserId GROUP BY iUserId)
+    WHERE iUserId =@iUserId
 
-end
-go
+END
+GO
