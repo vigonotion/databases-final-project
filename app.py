@@ -55,6 +55,7 @@ def search_empty():
         )
     return render_template("partials/products.html", products=products)
 
+
 @app.route("/search/<query>")
 def search(query):
     sql = "SELECT * FROM TProduct WHERE cName LIKE '%{}%'".format(query)
@@ -72,11 +73,20 @@ def advanced_search():
     qDescription = request.args.get("qDescription", "")
 
     if qTitle != "" and qDescription == "":
-        cursor.execute("select * from TProduct where cName LIKE ?", "%{}%".format(qTitle))
+        cursor.execute(
+            "select * from TProduct where cName LIKE ?", "%{}%".format(qTitle)
+        )
     elif qTitle != "" and qDescription != "":
-        cursor.execute("select * from TProduct where cName LIKE ? and cDescription LIKE ?", "%{}%".format(qTitle), "%{}%".format(qDescription))
+        cursor.execute(
+            "select * from TProduct where cName LIKE ? and cDescription LIKE ?",
+            "%{}%".format(qTitle),
+            "%{}%".format(qDescription),
+        )
     elif qTitle == "" and qDescription != "":
-        cursor.execute("select * from TProduct where cDescription LIKE ?", "%{}%".format(qDescription))
+        cursor.execute(
+            "select * from TProduct where cDescription LIKE ?",
+            "%{}%".format(qDescription),
+        )
     else:
         cursor.execute("select * from TProduct")
 
@@ -91,7 +101,6 @@ def advanced_search():
             products=products,
         )
     return render_template("advanced_search.html", products=products)
-
 
 
 @app.route("/checkout")
@@ -116,6 +125,7 @@ def checkout():
         total=total,
     )
 
+
 @app.route("/buy", methods=["POST"])
 def buy():
     if not "email" in session:
@@ -133,6 +143,7 @@ def buy():
 
     flash(u"Thanks for your purchase.", "success")
     return redirect(url_for("index"))
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -181,13 +192,14 @@ def db_check():
         row = cursor.fetchone()
     return render_template("db_check.html", version="\n".join(version))
 
+
 @app.route("/cart")
 def cart():
     if "cartProduct" not in session:
         session["cartProduct"] = []
     shoppingCart = api.get_unique_products()
     numberOfItems = len(shoppingCart)
-    
+
     total = 0
     for i in range(0, len(shoppingCart)):
         total = total + shoppingCart[i][2]
@@ -201,7 +213,7 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
-            total=total
+            total=total,
         )
     else:
         return render_template(
@@ -210,9 +222,8 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
-            total=total
+            total=total,
         )
-
 
 
 ##################################################################################
@@ -221,6 +232,7 @@ def cart():
 @app.route("/api/cart/purchase", methods=["POST"])
 def purchase():
     pass
+
 
 @app.route("/api/cart", methods=["POST"])
 def cart_add():
@@ -264,7 +276,10 @@ def product_ratings(product_id):
     )
 
     ratings = cursor.fetchall()
-    return render_template("partials/ratings.html", ratings=ratings, product_id=product_id)
+    return render_template(
+        "partials/ratings.html", ratings=ratings, product_id=product_id
+    )
+
 
 @app.route("/api/products/<int:product_id>/ratings", methods=["POST"])
 def rate(product_id):
@@ -272,17 +287,17 @@ def rate(product_id):
         id = session["id"]
         rating = request.form["rating"]
         comment = request.form["comment"]
-        
+
         cursor.execute(
-                """
+            """
                 insert into TRating (iProductId,iUserId,iRating,cComment) 
           	    values( ? , ? , ? , ? )
                 """,
-                product_id,
-                id,
-                rating,
-                comment,
-            )
+            product_id,
+            id,
+            rating,
+            comment,
+        )
         cursor.commit()
 
         flash(u"Your rating has been saved.", "success")
@@ -293,7 +308,6 @@ def rate(product_id):
         return redirect(url_for("index"))
 
 
-
 ##################################################################################
 # custom filters
 ###################################################################################
@@ -302,5 +316,3 @@ def rate(product_id):
 @app.template_filter()
 def dkk(value):
     return "{:.2f} kr.".format(value)
-
-

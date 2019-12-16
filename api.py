@@ -63,7 +63,10 @@ class Api:
 
             SELECT * FROM @i
             """,
-            vat, 0, user_id, card_id
+            vat,
+            0,
+            user_id,
+            card_id,
         )
 
         invoiceId = self.cursor.fetchone().iInvoiceId
@@ -75,7 +78,10 @@ class Api:
                 VALUES (?, ?, ?, ?)
 
                 """,
-                product[0].iProductId, invoiceId, product[0].fUnitPrice, product[1]
+                product[0].iProductId,
+                invoiceId,
+                product[0].fUnitPrice,
+                product[1],
             )
 
         self.cursor.commit()

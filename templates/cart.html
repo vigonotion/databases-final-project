@@ -11,18 +11,18 @@
 
 
         <h1 class="title">
-          Your Shopping Cart
+            Your Shopping Cart
         </h1>
-      </div>
+    </div>
 
-      <br><br>
+    <br><br>
 
     <div class="container">
         {% if haspurchases%}
 
         <table class="table" width="100%">
-                <thead>
-                    <tr>
+            <thead>
+                <tr>
                     <th width="10%"><abbr title="Image">IMG</abbr></th>
                     <th width="10%"><abbr title="Name">Name</abbr></th>
                     <th width="40%"><abbr title="Description"> Description</abbr></th>
@@ -30,11 +30,11 @@
                     <th width="10%"><abbr title="Unit Price">Unit Price</abbr></th>
                     <th width="10%"><abbr title="Total Price">Total Price</abbr></th>
                     <th width="5%"><abbr title="Delete">Remove</abbr></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {%for i in range(0,numberOfItems)%}
-                    <tr id="DeleteDivProduct{{ cartProduct[i][0].iProductId }}">
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in range(0,numberOfItems)%}
+                <tr id="DeleteDivProduct{{ cartProduct[i][0].iProductId }}">
                     <td><img src="/static/products/{{cartProduct[i][0].iProductId}}.jpg" alt="Product Image for product {{cartProduct[i][0].iProductId}}">
                     </td>
                     <td>{{cartProduct[i][0].cName}}</td>
@@ -48,93 +48,44 @@
                             <span class="icon is-small">
                                 <i class="fas fa-trash"></i>
                             </span>
-                            </button>
+                        </button>
 
                     </td>
-                    </tr>
+                </tr>
 
-                    {%endfor%}
-                </tbody>
-            </table>
+                {%endfor%}
+            </tbody>
+        </table>
 
-<div class="level">
-    <div class="level-left">
-            <p>Total: <b id="total">{{total|dkk}}</b></p>
-    </div>
-<div class="level-right">
-        <div class="field is-grouped level-item">
+        <div class="level">
+            <div class="level-left">
+                <p>Total: <b id="total">{{total|dkk}}</b></p>
+            </div>
+            <div class="level-right">
+                <div class="field is-grouped level-item">
 
-                <p class="control">
+                    <p class="control">
                         <a class="button" href="/">
-                          Buy more items
+                            Buy more items
                         </a>
-                      </p>
-                <p class="control">
-                  <a class="button is-link" href="/checkout">
-                    Checkout
-                  </a>
-                </p>
-              </div>
-</div>
+                    </p>
+                    <p class="control">
+                        <a class="button is-link" href="/checkout">
+                            Checkout
+                        </a>
+                    </p>
+                </div>
+            </div>
 
-</div>
+        </div>
 
-            
+
 
         {% else %}
-            <h2 class="title has-text-centered">You got no items in your cart. get back out there and shop away!</h2>
+        <h2 class="title has-text-centered">You got no items in your cart. get back out there and shop away!</h2>
         {% endif %}
     </div>
 </section>
 
-                    
-<script>
-
-
-$(function() {
-    $('[id^=DeleteProduct]').click(function() {
-        productId=$(this).val()
-        $.ajax({
-            url: '/api/cart',
-            contentType: 'application/json',
-            data: JSON.stringify(productId),
-            dataType : 'text',
-            type: 'DELETE',
-            success: function(response) {
-                var $quantityElement = $("#quantity"+productId)
-                var oldQuantityText = $quantityElement.text();
-                var QuantitytextVal = parseInt($quantityElement.text());
-
-                var $amountElement = $("#amount"+productId)
-                var oldamountText = $amountElement.text();
-                var amounttextVal = parseInt($amountElement.text());
-
-                var onesPrice=amounttextVal/QuantitytextVal
-
-                if (QuantitytextVal != 1){
-                    QuantitytextVal=QuantitytextVal-1
-                    $quantityElement.text(oldQuantityText.replace(oldQuantityText, QuantitytextVal+""))
-                }else{
-                    $("#DeleteDivProduct"+productId).remove()
-                }
-
-                amounttextVal=onesPrice*QuantitytextVal
-                $amountElement.text(oldamountText.replace(oldamountText, amounttextVal+".00 kr."))
-                
-                var $totalElement = $("#total")
-                var oldtotalText = $totalElement.text();
-                var totaltextVal = parseInt($totalElement.text());                
-                totaltextVal = totaltextVal- onesPrice
-                $totalElement.text(oldtotalText.replace(oldtotalText, totaltextVal+".00 kr."))
-           
-
-            },
-            error: function(error) {
-                alert("Oh no somthing went wrong! ur product was not deleted");
-            }
-        });
-    });
-});
-</script>
 
 {% endblock %}

@@ -7,7 +7,7 @@ search_box.addEventListener('input', function(e) {
 
     var r = new XMLHttpRequest();
     r.open("GET", "/search/" + query, true);
-    r.onreadystatechange = function () {
+    r.onreadystatechange = function() {
         if (r.readyState != 4 || r.status != 200) return;
         content.innerHTML = r.responseText;
     };
@@ -19,12 +19,12 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
     a.addEventListener('click', function(e) {
         e.preventDefault();
         let product_id = e.target.getAttribute('data-product-id');
-        
+
         let product_container = e.target.closest('.product');
 
         var r = new XMLHttpRequest();
         r.open("GET", "/api/products/" + product_id + "/ratings", true);
-        r.onreadystatechange = function () {
+        r.onreadystatechange = function() {
             if (r.readyState != 4 || r.status != 200) return;
 
             product_container.insertAdjacentHTML('beforeend', r.responseText);
@@ -35,7 +35,7 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
 
 $(function() {
     $('[id^=BuyProduct]').click(function() {
-        productId=$(this).val()
+        productId = $(this).val()
         amount = $(this).closest(".field").find("input[name=amount]").val()
         console.log(productId)
         $.ajax({
@@ -45,7 +45,7 @@ $(function() {
                 productId: productId,
                 amount: amount
             }),
-            dataType : 'text',
+            dataType: 'text',
             type: 'POST',
             success: function(response) {
                 alert("Product was added to your cart");
@@ -57,5 +57,51 @@ $(function() {
             }
         });
     });
-});   
+});
 
+// cart
+
+$(function() {
+    $('[id^=DeleteProduct]').click(function() {
+        productId = $(this).val()
+        $.ajax({
+            url: '/api/cart',
+            contentType: 'application/json',
+            data: JSON.stringify(productId),
+            dataType: 'text',
+            type: 'DELETE',
+            success: function(response) {
+                var $quantityElement = $("#quantity" + productId)
+                var oldQuantityText = $quantityElement.text();
+                var QuantitytextVal = parseInt($quantityElement.text());
+
+                var $amountElement = $("#amount" + productId)
+                var oldamountText = $amountElement.text();
+                var amounttextVal = parseInt($amountElement.text());
+
+                var onesPrice = amounttextVal / QuantitytextVal
+
+                if (QuantitytextVal != 1) {
+                    QuantitytextVal = QuantitytextVal - 1
+                    $quantityElement.text(oldQuantityText.replace(oldQuantityText, QuantitytextVal + ""))
+                } else {
+                    $("#DeleteDivProduct" + productId).remove()
+                }
+
+                amounttextVal = onesPrice * QuantitytextVal
+                $amountElement.text(oldamountText.replace(oldamountText, amounttextVal + ".00 kr."))
+
+                var $totalElement = $("#total")
+                var oldtotalText = $totalElement.text();
+                var totaltextVal = parseInt($totalElement.text());
+                totaltextVal = totaltextVal - onesPrice
+                $totalElement.text(oldtotalText.replace(oldtotalText, totaltextVal + ".00 kr."))
+
+
+            },
+            error: function(error) {
+                alert("Oh no somthing went wrong! ur product was not deleted");
+            }
+        });
+    });
+});
