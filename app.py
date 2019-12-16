@@ -81,7 +81,17 @@ def advanced_search():
         cursor.execute("select * from TProduct")
 
     products = cursor.fetchall()
+
+    if "email" in session:
+        return render_template(
+            "advanced_search.html",
+            logged_in=True,
+            name=escape(session["name"]),
+            email=escape(session["email"]),
+            products=products,
+        )
     return render_template("advanced_search.html", products=products)
+
 
 
 @app.route("/checkout")
@@ -101,11 +111,28 @@ def checkout():
         name=escape(session["name"]),
         email=escape(session["email"]),
         checkoutItems=checkoutItems,
-        usersCrditCards=usersCreditCards,
+        usersCreditCards=usersCreditCards,
         numberOfItems=numberOfItems,
         total=total,
     )
 
+@app.route("/buy", methods=["POST"])
+def buy():
+    if not "email" in session:
+        flash(u"You have to log in to make purchases.", "info")
+        return redirect(url_for("login"))
+
+    checkoutItems = api.get_unique_products()
+    creditCardNo = request.form["creditCardNo"]
+
+    # create a new invoice
+    api.create_invoice(session["id"], checkoutItems, creditCardNo, 20)
+
+    # clear cart
+    session["cartProduct"] = []
+
+    flash(u"Thanks for your purchase.", "success")
+    return redirect(url_for("index"))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -114,7 +141,7 @@ def login():
 
         # get users from database with this email
         cursor.execute(
-            "SELECT cEmail, cFirstName, cLastName FROM TUser WHERE cEmail = '{}';".format(
+            "SELECT iUserId, cEmail, cFirstName, cLastName FROM TUser WHERE cEmail = '{}';".format(
                 email
             )
         )
@@ -124,6 +151,7 @@ def login():
             flash(u"A user with this email could not be found.", "danger")
             return render_template("login.html")
         user = users[0]
+        session["id"] = user.iUserId
         session["email"] = user.cEmail
         session["name"] = "{} {}".format(user.cFirstName, user.cLastName)
         return redirect(url_for("index"))

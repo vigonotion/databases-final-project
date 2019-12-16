@@ -21,13 +21,15 @@
   </div>
   <br>
   <div class="container">
+
+    <form method="post" action="/buy">
       <div class="field has-addons">
     <div class="control has-icons-left">
       <div class="select">
-        <select>
+        <select name="creditCardNo">
           <option selected disabled>Select credit card...</option>
-          {%for creditCard in userCreditCards%}
-          <option>{{creditCard}}</option>
+          {%for creditCard in usersCreditCards%}
+          <option value="{{creditCard.iCardId}}">{{creditCard.cCreditCardNo}}</option>
           {%endfor%}
         </select>
       </div>
@@ -36,9 +38,11 @@
       </span>
     </div>
     <div class="control">
-      <a class="button is-link">Purchase now</a>
+      <button class="button is-link" type="submit">Purchase now</a>
     </div>
     </div>
+  </form>
+
   </div>
 </section>
 {% endblock %}

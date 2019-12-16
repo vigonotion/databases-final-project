@@ -11,19 +11,13 @@ class Api:
 
         self.cursor.execute(
             """
-            select iUserId from TUser
-            where cEmail = ?
+            select TCreditCard.iCardId, TCreditCard.cCreditCardNo from TUser
+            inner join TCreditCard on TUser.iUserId = TCreditCard.iUserId
+            where TUser.cEmail = ?
             """,
             email,
         )
-        UserId = self.cursor.fetchone()[0]
-        self.cursor.execute(
-            """
-            select cCreditCardNo from TCreditCard
-            where iUserId = ?
-            """,
-            UserId,
-        )
+
         usersCreditCards = self.cursor.fetchall()
         return usersCreditCards
 
@@ -52,3 +46,32 @@ class Api:
                 ]
             )
         return checkoutItems
+
+    def create_invoice(self, user_id, products, card_id, vat):
+
+        total: float = sum([product[2] for product in products])
+
+        self.cursor.execute(
+            """
+            INSERT dbo.TInvoice(dDate, iVat, fTotalPrice, iUserId, iCardId)
+            OUTPUT INSERTED.iInvoiceId
+            VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?) 
+            """,
+            vat, total, user_id, card_id
+        )
+
+        invoiceId = self.cursor.fetchone().iInvoiceId
+
+        for product in products:
+            self.cursor.execute(
+                """
+                INSERT dbo.TInvoiceLine(iProductId, iInvoiceId, fPrice, iQuantity)
+                VALUES (?, ?, ?, ?)
+
+                """,
+                product[0].iProductId, invoiceId, product[0].fUnitPrice, product[1]
+            )
+
+        self.cursor.commit()
+
+        print("created invoice with id {}".format(invoiceId))
