@@ -49,15 +49,21 @@ class Api:
 
     def create_invoice(self, user_id, products, card_id, vat):
 
-        total: float = sum([product[2] for product in products])
-
         self.cursor.execute(
             """
-            INSERT dbo.TInvoice(dDate, iVat, fTotalPrice, iUserId, iCardId)
-            OUTPUT INSERTED.iInvoiceId
-            VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?) 
+            SET NOCOUNT ON
+
+            DECLARE @i TABLE (
+                iInvoiceId INT
+            )
+
+            INSERT INTO dbo.TInvoice(dDate, iVat, fTotalPrice, iUserId, iCardId)
+            OUTPUT INSERTED.iInvoiceId INTO @i
+            VALUES (CURRENT_TIMESTAMP, ?, ?, ?, ?)
+
+            SELECT * FROM @i
             """,
-            vat, total, user_id, card_id
+            vat, 0, user_id, card_id
         )
 
         invoiceId = self.cursor.fetchone().iInvoiceId
@@ -65,7 +71,7 @@ class Api:
         for product in products:
             self.cursor.execute(
                 """
-                INSERT dbo.TInvoiceLine(iProductId, iInvoiceId, fPrice, iQuantity)
+                INSERT INTO dbo.TInvoiceLine(iProductId, iInvoiceId, fPrice, iQuantity)
                 VALUES (?, ?, ?, ?)
 
                 """,
