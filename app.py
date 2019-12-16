@@ -74,21 +74,21 @@ def advanced_search():
 
     if qTitle != "" and qDescription == "":
         cursor.execute(
-            "select * from TProduct where cName LIKE ?", "%{}%".format(qTitle)
+            "SELECT * FROM TProduct WHERE cName LIKE ?", "%{}%".format(qTitle)
         )
     elif qTitle != "" and qDescription != "":
         cursor.execute(
-            "select * from TProduct where cName LIKE ? and cDescription LIKE ?",
+            "SELECT * FROM TProduct WHERE cName LIKE ? AND cDescription LIKE ?",
             "%{}%".format(qTitle),
             "%{}%".format(qDescription),
         )
     elif qTitle == "" and qDescription != "":
         cursor.execute(
-            "select * from TProduct where cDescription LIKE ?",
+            "SELECT * FROM TProduct WHERE cDescription LIKE ?",
             "%{}%".format(qDescription),
         )
     else:
-        cursor.execute("select * from TProduct")
+        cursor.execute("SELECT * FROM TProduct")
 
     products = cursor.fetchall()
 
@@ -150,11 +150,14 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
 
-        # get users from database with this email
+        # get users FROM database with this email
         cursor.execute(
-            "SELECT iUserId, cEmail, cFirstName, cLastName FROM TUser WHERE cEmail = '{}';".format(
-                email
-            )
+            """
+            SELECT iUserId, cEmail, cFirstName, cLastName
+            FROM TUser
+            WHERE cEmail = ?
+            """,
+            email
         )
         users = cursor.fetchall()
 
@@ -183,7 +186,7 @@ def logout():
 
 @app.route("/db_check")
 def db_check():
-    # Sample select query
+    # Sample SELECT query
     cursor.execute("SELECT @@version;")
     version = []
     row = cursor.fetchone()
@@ -254,8 +257,8 @@ def cart_add():
 
 
 @app.route("/api/cart", methods=["DELETE"])
-def DeleteFromCart():
-    """remove a product from the cart"""
+def cart_delete():
+    """remove a product FROM the cart"""
 
     tempCart = session["cartProduct"]
     productId = request.get_json()
@@ -268,10 +271,10 @@ def DeleteFromCart():
 def product_ratings(product_id):
     cursor.execute(
         """
-        select * from TRating
+        SELECT * FROM TRating
         inner join TUser on TRating.iUserId = TUser.iUserId
-        where iProductId = ?
-    """,
+        WHERE iProductId = ?
+        """,
         product_id,
     )
 
@@ -290,9 +293,9 @@ def rate(product_id):
 
         cursor.execute(
             """
-                insert into TRating (iProductId,iUserId,iRating,cComment) 
-          	    values( ? , ? , ? , ? )
-                """,
+            INSERT INTO TRating (iProductId,iUserId,iRating,cComment) 
+            VALUES ( ? , ? , ? , ? )
+            """,
             product_id,
             id,
             rating,
