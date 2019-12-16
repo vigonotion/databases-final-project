@@ -23,6 +23,7 @@ api = Api(cursor, session)
 
 @app.route("/")
 def index():
+    """default page"""
 
     # get all products
     cursor.execute("SELECT * FROM TProduct")
@@ -41,6 +42,8 @@ def index():
 
 @app.route("/search/")
 def search_empty():
+    """search (when field is empty again)"""
+
     # get all products
     cursor.execute("SELECT * FROM TProduct")
     products = cursor.fetchall()
@@ -58,6 +61,8 @@ def search_empty():
 
 @app.route("/search/<query>")
 def search(query):
+    """search"""
+
     sql = "SELECT * FROM TProduct WHERE cName LIKE '%{}%'".format(query)
     print(sql)
     cursor.execute(sql)
@@ -68,6 +73,7 @@ def search(query):
 
 @app.route("/advanced_search")
 def advanced_search():
+    """advanced search"""
 
     qTitle = request.args.get("qTitle", "")
     qDescription = request.args.get("qDescription", "")
@@ -105,6 +111,8 @@ def advanced_search():
 
 @app.route("/checkout")
 def checkout():
+    """checkout page"""
+
     if not "email" in session:
         flash(u"You have to log in to make purchases.", "info")
         return redirect(url_for("login"))
@@ -128,6 +136,8 @@ def checkout():
 
 @app.route("/buy", methods=["POST"])
 def buy():
+    """buy (finish purchase)"""
+
     if not "email" in session:
         flash(u"You have to log in to make purchases.", "info")
         return redirect(url_for("login"))
@@ -147,6 +157,8 @@ def buy():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """log in"""
+
     if request.method == "POST":
         email = request.form["email"]
 
@@ -178,6 +190,8 @@ def login():
 
 @app.route("/logout")
 def logout():
+    """log out"""
+
     session.pop("email", None)
     session.pop("name", None)
     flash(u"You've been logged out successfully.", "success")
@@ -186,6 +200,8 @@ def logout():
 
 @app.route("/db_check")
 def db_check():
+    """show the database connection information"""
+
     # Sample SELECT query
     cursor.execute("SELECT @@version;")
     version = []
@@ -198,6 +214,8 @@ def db_check():
 
 @app.route("/cart")
 def cart():
+    """show the cart page"""
+
     if "cartProduct" not in session:
         session["cartProduct"] = []
     shoppingCart = api.get_unique_products()
@@ -232,11 +250,6 @@ def cart():
 ##################################################################################
 # api
 ##################################################################################
-@app.route("/api/cart/purchase", methods=["POST"])
-def purchase():
-    pass
-
-
 @app.route("/api/cart", methods=["POST"])
 def cart_add():
     """add a product to the cart"""
@@ -269,6 +282,7 @@ def cart_delete():
 
 @app.route("/api/products/<int:product_id>/ratings")
 def product_ratings(product_id):
+    """get all ratings for a product"""
     cursor.execute(
         """
         SELECT * FROM TRating
@@ -286,6 +300,8 @@ def product_ratings(product_id):
 
 @app.route("/api/products/<int:product_id>/ratings", methods=["POST"])
 def rate(product_id):
+    """rate a product"""
+
     if "email" in session:
         id = session["id"]
         rating = request.form["rating"]
@@ -318,4 +334,5 @@ def rate(product_id):
 
 @app.template_filter()
 def dkk(value):
+    """custom flask filter to style currency in dkk"""
     return "{:.2f} kr.".format(value)
