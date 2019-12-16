@@ -63,7 +63,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipCode = cZipcode,
+			@zipCode = iCityId,
 			@totalPaid = ftotalPaid
 	FROM inserted
 	SELECT	@oldUserId = iUserId,
@@ -71,7 +71,7 @@ BEGIN
 			@oldFirstName = cFirstName,
 			@oldLastName = cLastName,
 			@oldAddress = cAddress,
-			@oldZipcode = cZipCode,
+			@oldZipcode = iCityId,
 			@phone = cPhoneNo,
 			@oldTotalPaid = ftotalPaid
 	FROM deleted
@@ -97,7 +97,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipCode = cZipCode,
+			@zipCode = iCityId,
 			@phone = cPhoneNo,
 			@totalPaid = ftotalPaid
 	FROM inserted
@@ -118,7 +118,7 @@ BEGIN
 			@firstName = cFirstName,
 			@lastName = cLastName,
 			@address = cAddress,
-			@zipCode = cZipCode,
+			@zipCode = iCityId,
 			@phone = cPhoneNo,
 			@totalPaid = ftotalPaid
 	FROM deleted

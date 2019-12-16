@@ -28,7 +28,7 @@ CREATE TABLE TUser(
 CREATE TABLE TProduct(
 	iProductId INT IDENTITY NOT NULL,
 	cName VARCHAR(100) NOT NULL,
-	cDescription VARCHAR(1400) NOT NULL,
+	cDescription VARCHAR(MAX) NOT NULL,
 	fUnitPrice SMALLMONEY NOT NULL,
 	iQuantity INT,
 	fAverageRating numeric(3,2),
@@ -39,7 +39,7 @@ CREATE TABLE TRating(
 	iProductId INT NOT NULL,
 	iUserId int NOT NULL,
 	iRating NUMERIC(1,0),
-	cComment VARCHAR(1400),
+	cComment VARCHAR(2500),
 	PRIMARY KEY(iProductId, iUserId),
 	FOREIGN KEY(iProductId) REFERENCES TProduct,
 	FOREIGN KEY(iUserId) REFERENCES TUser
