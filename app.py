@@ -63,7 +63,7 @@ def search_empty():
 def search(query):
     """search"""
 
-    cursor.execute("SELECT * FROM TProduct WHERE cName LIKE ?", "%{}%".format(qTitle))
+    cursor.execute("SELECT * FROM TProduct WHERE cName LIKE ?", "%{}%".format(query))
     products = cursor.fetchall()
 
     return render_template("partials/search.html", query=query, products=products)
