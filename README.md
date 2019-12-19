@@ -25,6 +25,13 @@ Then, navigate to http://localhost:5000.
 - Microsoft ODBC Driver 17
   - [Download for Windows](https://www.microsoft.com/en-us/download/details.aspx?id=56567)
   - [Guide for OS X and Linux](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
+-Setting up the database should be done before accessing web app:
+
+##Setup (for database)
+
+###1. Run scripts in "security" folder following the numbering 000_Schema, 001_Procedure,002_Triggers, 003_Temporal_table, 004_Audit, 005_Indexes
+###2. Import test data in "data" folder: Testdata v3.sql
+*** Procedure for Neo4j is included in Cypher Script
 
 ## Setup (for development)
 
