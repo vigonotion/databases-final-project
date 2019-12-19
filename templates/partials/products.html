@@ -10,7 +10,7 @@
                 <article class="media">
                     <div class="media-left">
                         <figure class="image">
-                            <img src="https://via.placeholder.com/200x300" alt="Image">
+                            <img src="/static/products/{{ product.iProductId }}.jpg" alt="Product Image for product {{ product.iProductId }}">
                         </figure>
                     </div>
                     <div class="media-content">
@@ -25,24 +25,24 @@
                             <div class="field has-addons">
 
                                 <div class="control">
-                                        <input type="number" class="input" name="amount" value="1" style="width: 5em" min="1">
+                                    <input type="number" class="input" name="amount" value="1" style="width: 5em" min="1">
 
-                                    </div>
-<div class="control">
-                             <button class="button" id="BuyProduct{{ product.iProductId }}" value="{{ product.iProductId }}">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </span>
-                                    <span>Add to cart</span>
+                                </div>
+                                <div class="control">
+                                    <button class="button" id="BuyProduct{{ product.iProductId }}" value="{{ product.iProductId }}">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </span>
+                                        <span>Add to cart</span>
                                     </button>
                                 </div>
-                                </div>
+                            </div>
 
                             <br>
                             <br>
 
                             {% if product.fAverageRating == None %}
-                                No ratings yet · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">Rate Product</a>
+                            No ratings yet · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">Rate Product</a>
                             {% else %}
                             <div class="rating">
 
@@ -51,29 +51,29 @@
                                 {% set ns = namespace(stars=0) %}
 
                                 {% for i in range(fullStars) %}
-                                    <i class="fas fa-star" aria-hidden="true"></i>
-                                    {% set ns.stars = ns.stars + 1 %}
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                {% set ns.stars = ns.stars + 1 %}
                                 {% endfor %}
 
                                 {% if halfStar %}
-                                    <i class="fas fa-star-half-alt" aria-hidden="true"></i>
-                                    {% set ns.stars = ns.stars + 1 %}
+                                <i class="fas fa-star-half-alt" aria-hidden="true"></i>
+                                {% set ns.stars = ns.stars + 1 %}
                                 {% endif %}
 
                                 {% for i in range(5 - ns.stars) %}
-                                    <i class="far fa-star" aria-hidden="true"></i>
+                                <i class="far fa-star" aria-hidden="true"></i>
                                 {% endfor %}
                             </div>
 
                             Average Rating: {{ product.fAverageRating }} · <a href="" data-product-id="{{ product.iProductId }}" class="see-ratings">See Ratings / Rate Product</a>
-                        
+
                             {% endif %}
                         </div>
 
                     </div>
                 </article>
             </div>
-            
+
             {# rating... #}
 
         </div>

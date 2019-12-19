@@ -1,4 +1,7 @@
 -- updates the average rating for a product after each new rating
+USE Rainforest
+GO
+
 CREATE OR ALTER trigger UpdateAvgRatingForProduct ON TRating after INSERT
 AS
 BEGIN
@@ -14,9 +17,10 @@ CREATE OR ALTER trigger UpdateProductInStock ON TInvoiceLine after INSERT
 AS
 BEGIN
     SET NOCOUNT ON
-    DECLARE @iProductId int
-    SELECT @iProductId = iProductId FROM INSERTED
-    EXEC dbo.ProductinStock @iProductId
+    DECLARE @iProductId INT
+            , @iInvoiceLineId INT
+    SELECT @iProductId = iProductId, @iInvoiceLineId = iInvoiceLineId FROM INSERTED
+    EXEC dbo.ProductinStock @iProductId, @iInvoiceLineId
 END
 GO
 

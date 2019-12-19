@@ -2,131 +2,129 @@
 <html>
 
 <head>
-  {% block head %}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rainforest Online Store</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-  <link rel="stylesheet" href="/static/style.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script defer src="/static/index.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  {% endblock %}
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rainforest Online Store</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script defer src="/static/index.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {% endblock %}
 </head>
 
 <body>
 
-  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <img src="/static/rainforest.svg">
-      </a>
-
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-        data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-
-        <span class="navbar-item">
-          <p class="control has-icons-left">
-            <input class="input" type="email" placeholder="Search..." id="search">
-            <span class="icon is-small is-left">
-              <i class="fas fa-search"></i>
-            </span>
-          </p>
-        </span>
-        <a class="navbar-item" href="/advanced_search">
-          Advanced Search
-        </a>
-      </div>
-
-      <div class="navbar-end">
-
-
-        {% if logged_in %}
-
-
-        <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link">
-            <span>{{ name }}</span>
-            <figure class="image is-24x24" style="margin-left: 10px;">
-              <img src="https://avatars.dicebear.com/v2/avataaars/{{ name }}.svg?options[style][]=circle">
-            </figure>
-          </div>
-
-
-          <div class="navbar-dropdown">
-            <a class="navbar-item has-text-danger" href="/logout">
-              Log out
+    <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="/static/rainforest.svg">
             </a>
-          </div>
-        </div>
 
-        {% else %}
-
-
-        <div class="navbar-item">
-          <div class="buttons">
-
-            <a class="button is-primary" href="/login">
-              Log in
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
-          </div>
         </div>
 
-        {% endif %}
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
 
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="button" href="/cart">
-              <img src="/static/shopping-cart.png" height="18px" width="18px">
-            </a>
-          </div>
+                <span class="navbar-item">
+                    <p class="control has-icons-left">
+                        <input class="input" type="email" placeholder="Search..." id="search">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </p>
+                </span>
+                <a class="navbar-item" href="/advanced_search">
+                    Advanced Search
+                </a>
+            </div>
+
+            <div class="navbar-end">
+
+
+                {% if logged_in %}
+
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <div class="navbar-link">
+                        <span>{{ name }}</span>
+                        <figure class="image is-24x24" style="margin-left: 10px;">
+                            <img src="https://avatars.dicebear.com/v2/avataaars/{{ name }}.svg?options[style][]=circle">
+                        </figure>
+                    </div>
+
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item has-text-danger" href="/logout">
+                            Log out
+                        </a>
+                    </div>
+                </div>
+
+                {% else %}
+
+
+                <div class="navbar-item">
+                    <div class="buttons">
+
+                        <a class="button is-primary" href="/login">
+                            Log in
+                        </a>
+                    </div>
+                </div>
+
+                {% endif %}
+
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button" href="/cart">
+                            <img src="/static/shopping-cart.png" height="18px" width="18px">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </div>
+    </nav>
 
-      </div>
-    </div>
-  </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
+    <section class="section">
+        <div class="container">
 
-  <section class="section">
-    <div class="container">
-
-      {% for category, message in messages %}
-      <article class="message is-{{ category }}">
-        <div class="message-body">
-          {{ message }}
+            {% for category, message in messages %}
+            <article class="message is-{{ category }}">
+                <div class="message-body">
+                    {{ message }}
+                </div>
+            </article>
+            {% endfor %}
         </div>
-      </article>
-      {% endfor %}
+    </section>
+
+
+    {% endif %}
+    {% endwith %}
+    <div id="content">
+        {% block content %}
+        {% endblock %}
     </div>
-  </section>
 
-
-  {% endif %}
-  {% endwith %}
-  <div id="content">
-    {% block content %}
-    {% endblock %}
-  </div>
-
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Rainforest Online Store</strong> by <a href="https://github.com/Minh3124">Minh Cao</a>, <a
-          href="https://github.com/pokealai">Po Lai</a>, <a href="https://github.com/Vanman007">Thomas Petersen</a> and
-        <a href="https://github.com/vigonotion">Tom Schneider</a>.
-      </p>
-    </div>
-  </footer>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Rainforest Online Store</strong> by <a href="https://github.com/Minh3124">Minh Cao</a>, <a href="https://github.com/pokealai">Po Lai</a>, <a href="https://github.com/Vanman007">Thomas Petersen</a> and
+                <a href="https://github.com/vigonotion">Tom Schneider</a>.
+            </p>
+        </div>
+    </footer>
 
 </body>
 

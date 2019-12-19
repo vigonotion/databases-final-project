@@ -4,44 +4,44 @@
 {% block content %}
 
 <datalist id="emails">
-  {% if emails %}
-  {% for e in emails %}
-  <option>{{ e }}</option>
-  {% endfor %}
-  {% endif %}
+    {% if emails %}
+    {% for e in emails %}
+    <option>{{ e }}</option>
+    {% endfor %}
+    {% endif %}
 </datalist>
 
 <section class="section">
-  <div class="container">
-    <h1 class="title">
-      Login
-    </h1>
-    <p class="subtitle">
-      Please log in using your email address.
-    </p>
-  </div>
-
-  <br>
-
-  <div class="container">
-
-    <form name="login" method="post">
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="email" placeholder="Email" name="email" list="emails">
-          <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
+    <div class="container">
+        <h1 class="title">
+            Login
+        </h1>
+        <p class="subtitle">
+            Please log in using your email address.
         </p>
-      </div>
+    </div>
 
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-link">Log in</button>
-        </div>
-      </div>
-    </form>
+    <br>
 
-  </div>
+    <div class="container">
+
+        <form name="login" method="post">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input class="input" type="email" placeholder="Email" name="email" list="emails">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link">Log in</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
 </section>
 {% endblock %}

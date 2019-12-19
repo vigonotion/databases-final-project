@@ -23,6 +23,7 @@ api = Api(cursor, session)
 
 @app.route("/")
 def index():
+    """default page"""
 
     # get all products
     cursor.execute("SELECT * FROM TProduct")
@@ -41,6 +42,8 @@ def index():
 
 @app.route("/search/")
 def search_empty():
+    """search (when field is empty again)"""
+
     # get all products
     cursor.execute("SELECT * FROM TProduct")
     products = cursor.fetchall()
@@ -55,8 +58,11 @@ def search_empty():
         )
     return render_template("partials/products.html", products=products)
 
+
 @app.route("/search/<query>")
 def search(query):
+    """search"""
+
     sql = "SELECT * FROM TProduct WHERE cName LIKE '%{}%'".format(query)
     print(sql)
     cursor.execute(sql)
@@ -67,18 +73,28 @@ def search(query):
 
 @app.route("/advanced_search")
 def advanced_search():
+    """advanced search"""
 
     qTitle = request.args.get("qTitle", "")
     qDescription = request.args.get("qDescription", "")
 
     if qTitle != "" and qDescription == "":
-        cursor.execute("select * from TProduct where cName LIKE ?", "%{}%".format(qTitle))
+        cursor.execute(
+            "SELECT * FROM TProduct WHERE cName LIKE ?", "%{}%".format(qTitle)
+        )
     elif qTitle != "" and qDescription != "":
-        cursor.execute("select * from TProduct where cName LIKE ? and cDescription LIKE ?", "%{}%".format(qTitle), "%{}%".format(qDescription))
+        cursor.execute(
+            "SELECT * FROM TProduct WHERE cName LIKE ? AND cDescription LIKE ?",
+            "%{}%".format(qTitle),
+            "%{}%".format(qDescription),
+        )
     elif qTitle == "" and qDescription != "":
-        cursor.execute("select * from TProduct where cDescription LIKE ?", "%{}%".format(qDescription))
+        cursor.execute(
+            "SELECT * FROM TProduct WHERE cDescription LIKE ?",
+            "%{}%".format(qDescription),
+        )
     else:
-        cursor.execute("select * from TProduct")
+        cursor.execute("SELECT * FROM TProduct")
 
     products = cursor.fetchall()
 
@@ -93,9 +109,10 @@ def advanced_search():
     return render_template("advanced_search.html", products=products)
 
 
-
 @app.route("/checkout")
 def checkout():
+    """checkout page"""
+
     if not "email" in session:
         flash(u"You have to log in to make purchases.", "info")
         return redirect(url_for("login"))
@@ -116,14 +133,29 @@ def checkout():
         total=total,
     )
 
+
 @app.route("/buy", methods=["POST"])
 def buy():
+    """buy (finish purchase)"""
+
     if not "email" in session:
         flash(u"You have to log in to make purchases.", "info")
         return redirect(url_for("login"))
 
     checkoutItems = api.get_unique_products()
     creditCardNo = request.form["creditCardNo"]
+
+    print(checkoutItems)
+
+    for product in checkoutItems:
+        itemStockQty = product[0][4]
+        itemCartAmount = product[1]
+        productName = product[0][1]
+        if(itemStockQty < itemCartAmount):
+            flash(u"Purchase Cancelled! Sorry, we currently only have " 
+            + str(itemStockQty) + " of " 
+            + productName, "Error")
+            return redirect(url_for("index"))
 
     # create a new invoice
     api.create_invoice(session["id"], checkoutItems, creditCardNo, 20)
@@ -134,16 +166,22 @@ def buy():
     flash(u"Thanks for your purchase.", "success")
     return redirect(url_for("index"))
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """log in"""
+
     if request.method == "POST":
         email = request.form["email"]
 
-        # get users from database with this email
+        # get users FROM database with this email
         cursor.execute(
-            "SELECT iUserId, cEmail, cFirstName, cLastName FROM TUser WHERE cEmail = '{}';".format(
-                email
-            )
+            """
+            SELECT iUserId, cEmail, cFirstName, cLastName
+            FROM TUser
+            WHERE cEmail = ?
+            """,
+            email
         )
         users = cursor.fetchall()
 
@@ -164,6 +202,8 @@ def login():
 
 @app.route("/logout")
 def logout():
+    """log out"""
+
     session.pop("email", None)
     session.pop("name", None)
     flash(u"You've been logged out successfully.", "success")
@@ -172,7 +212,9 @@ def logout():
 
 @app.route("/db_check")
 def db_check():
-    # Sample select query
+    """show the database connection information"""
+
+    # Sample SELECT query
     cursor.execute("SELECT @@version;")
     version = []
     row = cursor.fetchone()
@@ -182,43 +224,15 @@ def db_check():
     return render_template("db_check.html", version="\n".join(version))
 
 
-@app.route("/RateAndComment", methods=["GET", "POST"])
-def RateAndComment():
-    # if request.method == 'POST':
-    if "email" in session:
-        product_id = request.form["product_id"]
-        email = session["email"]
-        rating = request.form["rating"]
-        comment = request.form["comment"]
-        # try save changes to DB or send user back to page with the users inputs
-        try:
-            cursor.execute(
-                """ insert into TRating (iProduct_id,cEmail,iRating,cComment) 
-          	values( ? , ? , ? , ? ) """,
-                product_id,
-                email,
-                rating,
-                comment,
-            )
-            cursor.commit()
-            # return render_template('RateAndComment.html')
-            return "Succes"
-        except:
-            cursor.rollback()
-            # return render_template('RateAndComment.html', rating=rating, comment=comment)
-            return "Failed: tried commit to datbase"
-    else:
-        return "Failed: not logged in"
-        # return render_template('RateAndComment.html')
-
-
 @app.route("/cart")
 def cart():
+    """show the cart page"""
+
     if "cartProduct" not in session:
         session["cartProduct"] = []
     shoppingCart = api.get_unique_products()
     numberOfItems = len(shoppingCart)
-    
+
     total = 0
     for i in range(0, len(shoppingCart)):
         total = total + shoppingCart[i][2]
@@ -232,7 +246,7 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
-            total=total
+            total=total,
         )
     else:
         return render_template(
@@ -241,18 +255,13 @@ def cart():
             haspurchases=True,
             cartProduct=shoppingCart,
             numberOfItems=numberOfItems,
-            total=total
+            total=total,
         )
-
 
 
 ##################################################################################
 # api
 ##################################################################################
-@app.route("/api/cart/purchase", methods=["POST"])
-def purchase():
-    pass
-
 @app.route("/api/cart", methods=["POST"])
 def cart_add():
     """add a product to the cart"""
@@ -273,8 +282,8 @@ def cart_add():
 
 
 @app.route("/api/cart", methods=["DELETE"])
-def DeleteFromCart():
-    """remove a product from the cart"""
+def cart_delete():
+    """remove a product FROM the cart"""
 
     tempCart = session["cartProduct"]
     productId = request.get_json()
@@ -285,17 +294,49 @@ def DeleteFromCart():
 
 @app.route("/api/products/<int:product_id>/ratings")
 def product_ratings(product_id):
+    """get all ratings for a product"""
     cursor.execute(
         """
-        select * from TRating
+        SELECT * FROM TRating
         inner join TUser on TRating.iUserId = TUser.iUserId
-        where iProductId = ?
-    """,
+        WHERE iProductId = ?
+        """,
         product_id,
     )
 
     ratings = cursor.fetchall()
-    return render_template("partials/ratings.html", ratings=ratings)
+    return render_template(
+        "partials/ratings.html", ratings=ratings, product_id=product_id
+    )
+
+
+@app.route("/api/products/<int:product_id>/ratings", methods=["POST"])
+def rate(product_id):
+    """rate a product"""
+
+    if "email" in session:
+        id = session["id"]
+        rating = request.form["rating"]
+        comment = request.form["comment"]
+
+        cursor.execute(
+            """
+            INSERT INTO TRating (iProductId,iUserId,iRating,cComment) 
+            VALUES ( ? , ? , ? , ? )
+            """,
+            product_id,
+            id,
+            rating,
+            comment,
+        )
+        cursor.commit()
+
+        flash(u"Your rating has been saved.", "success")
+        return redirect(url_for("index"))
+
+    else:
+        flash(u"Please log in to rate a product.", "danger")
+        return redirect(url_for("index"))
 
 
 ##################################################################################
@@ -305,6 +346,5 @@ def product_ratings(product_id):
 
 @app.template_filter()
 def dkk(value):
+    """custom flask filter to style currency in dkk"""
     return "{:.2f} kr.".format(value)
-
-

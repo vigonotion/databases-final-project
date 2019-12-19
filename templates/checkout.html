@@ -3,46 +3,46 @@
 
 {% block content %}
 <section class="section">
-  <div class="container">
+    <div class="container">
 
 
-    <h1 class="title">
-      Checkout
-    </h1>
-    <p class="subtitle">
-      Please select payment method to finish your purchase.
-    </p>
-  </div>
-
-  <br>
-
-  <div class="container">
-    <p>Total: <b>{{total|dkk}}</b></p>
-  </div>
-  <br>
-  <div class="container">
-
-    <form method="post" action="/buy">
-      <div class="field has-addons">
-    <div class="control has-icons-left">
-      <div class="select">
-        <select name="creditCardNo">
-          <option selected disabled>Select credit card...</option>
-          {%for creditCard in usersCreditCards%}
-          <option value="{{creditCard.iCardId}}">{{creditCard.cCreditCardNo}}</option>
-          {%endfor%}
-        </select>
-      </div>
-      <span class="icon is-left">
-        <i class="fas fa-credit-card"></i>
-      </span>
+        <h1 class="title">
+            Checkout
+        </h1>
+        <p class="subtitle">
+            Please select payment method to finish your purchase.
+        </p>
     </div>
-    <div class="control">
-      <button class="button is-link" type="submit">Purchase now</a>
-    </div>
-    </div>
-  </form>
 
-  </div>
+    <br>
+
+    <div class="container">
+        <p>Total: <b>{{total|dkk}}</b></p>
+    </div>
+    <br>
+    <div class="container">
+
+        <form method="post" action="/buy">
+            <div class="field has-addons">
+                <div class="control has-icons-left">
+                    <div class="select">
+                        <select name="creditCardNo">
+                            <option selected disabled>Select credit card...</option>
+                            {%for creditCard in usersCreditCards%}
+                            <option value="{{creditCard.iCardId}}">{{creditCard.cCreditCardNo}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <span class="icon is-left">
+                        <i class="fas fa-credit-card"></i>
+                    </span>
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit">Purchase now</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
 </section>
 {% endblock %}

@@ -11,9 +11,9 @@ class Api:
 
         self.cursor.execute(
             """
-            select TCreditCard.iCardId, TCreditCard.cCreditCardNo from TUser
-            inner join TCreditCard on TUser.iUserId = TCreditCard.iUserId
-            where TUser.cEmail = ?
+            SELECT TCreditCard.iCardId, TCreditCard.cCreditCardNo FROM TUser
+            INNER JOIN TCreditCard ON TUser.iUserId = TCreditCard.iUserId
+            WHERE TUser.cEmail = ?
             """,
             email,
         )
@@ -29,9 +29,9 @@ class Api:
         for product_id in counter:
             self.cursor.execute(
                 """
-                select * from TProduct
-                where iProductId = ?
-            """,
+                SELECT * from TProduct
+                WHERE iProductId = ?
+                """,
                 product_id,
             )
             product = self.cursor.fetchone()
@@ -63,7 +63,10 @@ class Api:
 
             SELECT * FROM @i
             """,
-            vat, 0, user_id, card_id
+            vat,
+            0,
+            user_id,
+            card_id,
         )
 
         invoiceId = self.cursor.fetchone().iInvoiceId
@@ -75,7 +78,10 @@ class Api:
                 VALUES (?, ?, ?, ?)
 
                 """,
-                product[0].iProductId, invoiceId, product[0].fUnitPrice, product[1]
+                product[0].iProductId,
+                invoiceId,
+                product[0].fUnitPrice,
+                product[1],
             )
 
         self.cursor.commit()
