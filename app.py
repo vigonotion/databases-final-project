@@ -145,6 +145,18 @@ def buy():
     checkoutItems = api.get_unique_products()
     creditCardNo = request.form["creditCardNo"]
 
+    print(checkoutItems)
+
+    for product in checkoutItems:
+        itemStockQty = product[0][4]
+        itemCartAmount = product[1]
+        productName = product[0][1]
+        if(itemStockQty < itemCartAmount):
+            flash(u"Purchase Cancelled! Sorry, we currently only have " 
+            + str(itemStockQty) + " of " 
+            + productName, "Error")
+            return redirect(url_for("index"))
+
     # create a new invoice
     api.create_invoice(session["id"], checkoutItems, creditCardNo, 20)
 
