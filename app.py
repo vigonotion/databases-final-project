@@ -63,9 +63,7 @@ def search_empty():
 def search(query):
     """search"""
 
-    sql = "SELECT * FROM TProduct WHERE cName LIKE '%{}%'".format(query)
-    print(sql)
-    cursor.execute(sql)
+    cursor.execute("SELECT * FROM TProduct WHERE cName LIKE ?", "%{}%".format(query))
     products = cursor.fetchall()
 
     return render_template("partials/search.html", query=query, products=products)
@@ -298,7 +296,7 @@ def product_ratings(product_id):
     cursor.execute(
         """
         SELECT * FROM TRating
-        inner join TUser on TRating.iUserId = TUser.iUserId
+        INNER JOIN TUser ON TRating.iUserId = TUser.iUserId
         WHERE iProductId = ?
         """,
         product_id,
@@ -321,7 +319,7 @@ def rate(product_id):
 
         cursor.execute(
             """
-            INSERT INTO TRating (iProductId,iUserId,iRating,cComment) 
+            INSERT INTO TRating (iProductId, iUserId, iRating, cComment) 
             VALUES ( ? , ? , ? , ? )
             """,
             product_id,

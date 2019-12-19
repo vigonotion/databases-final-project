@@ -32,7 +32,7 @@ CREATE PROCEDURE Totalmoney(@iInvoiceId INT) AS
 BEGIN
     SET NOCOUNT ON
     UPDATE TInvoice
-    SET fTotalPrice = (select sum(fPrice) FROM TInvoiceLine WHERE iInvoiceId = @iInvoiceId GROUP BY iInvoiceId)
+    SET fTotalPrice = (select sum(fPrice * iQuantity) FROM TInvoiceLine WHERE iInvoiceId = @iInvoiceId GROUP BY iInvoiceId)
     WHERE iInvoiceId =@iInvoiceId
 
 END

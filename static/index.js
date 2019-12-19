@@ -20,14 +20,14 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
         e.preventDefault();
         let product_id = e.target.getAttribute('data-product-id');
 
-        let product_container = e.target.closest('.product');
+        let rating_container = $(e.target).closest('.product').find(".ratings");
 
         var r = new XMLHttpRequest();
         r.open("GET", "/api/products/" + product_id + "/ratings", true);
         r.onreadystatechange = function() {
             if (r.readyState != 4 || r.status != 200) return;
 
-            product_container.insertAdjacentHTML('beforeend', r.responseText);
+            $(rating_container).html(r.responseText);
         };
         r.send();
     });
@@ -35,19 +35,12 @@ document.querySelectorAll(".see-ratings").forEach(function(a) {
 
 $(function() {
     $('[id^=BuyProduct]').click(function() {
-<<<<<<< HEAD
 
         var amountField = $(this).closest(".field").find('input[name=amount]');
 
-        var productId=$(this).val()
-        var amount = amountField.val()
+        var productId = $(this).val();
+        var amount = amountField.val();
 
-        productId=$(this).val()
-=======
-        productId = $(this).val()
->>>>>>> cc24e03eb7f1210f623ec262ff29b156811a62fc
-        amount = $(this).closest(".field").find("input[name=amount]").val()
-        console.log(productId)
         $.ajax({
             url: '/api/cart',
             contentType: 'application/json',
@@ -55,11 +48,7 @@ $(function() {
                 productId: productId,
                 amount: amount
             }),
-<<<<<<< HEAD
             dataType : 'text',
-=======
-            dataType: 'text',
->>>>>>> cc24e03eb7f1210f623ec262ff29b156811a62fc
             type: 'POST',
             success: function(response) {
                 alert("Product was added to your cart");
