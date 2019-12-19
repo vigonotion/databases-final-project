@@ -1,4 +1,7 @@
 -- calculates the average rating for a product based on all ratings.
+USE Rainforest
+GO
+
 CREATE PROCEDURE SetAvgProductRating (@iProductId INT) AS
 BEGIN
     SET NOCOUNT ON
@@ -12,12 +15,12 @@ END
 GO
 
 -- calculates product in stock
-CREATE PROCEDURE ProductinStock(@iProductId INT) AS
+CREATE PROCEDURE ProductinStock(@iProductId INT, @iInvoiceLineId INT) AS
 BEGIN
 	SET NOCOUNT ON
     UPDATE TProduct
     SET iQuantity = iQuantity-(
-        SELECT sum(iQuantity) FROM TInvoiceLine WHERE iProductId = @iProductId GROUP BY iProductId
+        SELECT iQuantity FROM TInvoiceLine WHERE iProductId = @iProductId AND iInvoiceLineId = @iInvoiceLineId
     )
     WHERE iProductId = @iProductId
 
