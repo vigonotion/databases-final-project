@@ -3,20 +3,7 @@
 ![databases @ kea](https://img.shields.io/badge/software%20testing-kea-%23ea5045)
 ![docker](https://img.shields.io/badge/docker-yes-blue)
 
-Source Code for the final project for databasses at KEA Copenhagen.
-
-## Using Docker
-
-You can run this project using docker.
-
-Build and run using docker:
-
-```sh
-docker build -t databases-final-project .
-docker run -p 5000:5000 databases-final-project
-```
-
-Then, navigate to http://localhost:5000.
+Source Code for the final project for databases at KEA Copenhagen.
 
 ## Prerequisites
 
@@ -71,7 +58,11 @@ cp .env.example .env
 
 Now open this file and edit the variables to reflect your SQL Server authentication data.
 
-### 4. Run app
+### 4. Setup database
+
+Run all the SQL scripts in the `database/` folder ordered by number.
+
+### 5. Run app
 
 ```sh
 flask run --host=0.0.0.0
