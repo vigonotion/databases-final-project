@@ -49,7 +49,16 @@ END
 GO
 
 ---Update Card total paid
-CREATE OR ALTER trigger UpdateTotalPaidCard ON TInvoice after INSERT
+CREATE OR ALTER trigger UpdateTotalPaidCardInsert ON TInvoice after INSERT
+AS
+BEGIN
+    SET NOCOUNT ON
+    DECLARE @iCardId int
+    SELECT @iCardId = iCardId FROM INSERTED
+    EXEC dbo.TotalpaidCard @iCardId
+END
+GO
+CREATE OR ALTER trigger UpdateTotalPaidCardUpdate ON TInvoice after UPDATE
 AS
 BEGIN
     SET NOCOUNT ON
