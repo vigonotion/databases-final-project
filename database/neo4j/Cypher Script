@@ -1,6 +1,8 @@
-1. Install Neo4j
-2. Import csv files to Neo4j installation folder "\.Neo4jDesktop\neo4jDatabases\database-ce28a49d-1aa3-4281-a55b-abb6845cc214\installation-3.5.12\import"
-
+1. Download Neo4j server, extract to folder
+2. Open command prompt, navigate to Neo4j folder, go to /bin. execute "./neo4j console" in terminal.
+3. For the first time, log in with default account [username]=neo4j, [password]=neo4j
+3. Put csv files to Neo4j's import directory <neo4j-home>\import
+4. Insert queries
 
 CYPHER COMMAND:
 --Create user nodes
