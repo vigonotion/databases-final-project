@@ -48,3 +48,13 @@ BEGIN
 
 END
 GO
+
+-- calculates the credit card total paid
+CREATE PROCEDURE TotalpaidCard(@iCardId INT) AS
+BEGIN
+    SET NOCOUNT ON
+    UPDATE TCreditCard
+    SET fTotalPaid = (select sum(fTotalPrice) FROM TInvoice WHERE iCardId = @iCardId GROUP BY iCardId)
+    WHERE iCardId = @iCardId
+END
+GO
