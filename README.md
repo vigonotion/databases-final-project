@@ -16,8 +16,8 @@ Source Code for the final project for databases at KEA Copenhagen.
 
 ##Setup (for database)
 
-###1. Run scripts in "security" folder following the numbering 000_Schema, 001_Procedure,002_Triggers, 003_Temporal_table, 004_Audit, 005_Indexes
-###2. Import test data in "data" folder: Testdata v3.sql
+###1. Run scripts in "database" folder following the order
+###2. Import test data 999
 *** Procedure for Neo4j is included in Cypher Script
 
 ## Setup (for development)
