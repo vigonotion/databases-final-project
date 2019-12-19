@@ -1,10 +1,18 @@
-1. Download Neo4j server, extract to folder
-2. Open command prompt, navigate to Neo4j folder, go to /bin. execute "./neo4j console" in terminal.
-3. For the first time, log in with default account [username]=neo4j, [password]=neo4j
-3. Put csv files to Neo4j's import directory <neo4j-home>\import
-4. Insert queries
+# Installation Guide for the Graph Database part
 
-CYPHER COMMAND:
+Please follow this guide to set up the project
+
+## Prerequisites
+
+- Neo4j Server
+
+## Setup (for development)
+
+- Put csv files to Neo4j's import directory `<neo4j-home>\import`
+- Start Neo4j server and open front end
+- Run these commands:
+
+```cypher
 --Create user nodes
 USING PERIODIC COMMIT
 LOAD CSV WITH HEADERS FROM "file:///User.csv" AS row
@@ -32,3 +40,4 @@ LOAD CSV WITH HEADERS FROM "file:///User.csv" AS row
 MATCH (user:User {userID: row.iUserId})
 MATCH (city:City {cityID: row.iCityId})
 CREATE (user)-[r:LIVES_IN]->(city)
+```

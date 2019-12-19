@@ -1,0 +1,22 @@
+version: "3.2"
+services:
+  mssql-server:
+    container_name: mssql-server
+    image: mcr.microsoft.com/mssql/server:latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+
+  neo4j-server:
+    container_name: neo4j-server
+    image: neo4j:4.0
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - "$PWD/neo4j/:/var/lib/neo4j/import"
+    environment:
+      NEO4J_AUTH: none

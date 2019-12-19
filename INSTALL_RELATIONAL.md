@@ -1,25 +1,14 @@
-# Databases Final Project
+# Installation Guide for the Relational Database part
 
-![databases @ kea](https://img.shields.io/badge/software%20testing-kea-%23ea5045)
-![docker](https://img.shields.io/badge/docker-yes-blue)
+Please follow this guide to set up the project
 
-Source Code for the final project for databases at KEA Copenhagen.
+## Prerequisites
 
-## Install guides
-
-<<<<<<< HEAD
 - Python 3
 - SQL Server
 - Microsoft ODBC Driver 17
   - [Download for Windows](https://www.microsoft.com/en-us/download/details.aspx?id=56567)
   - [Guide for OS X and Linux](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15)
--Setting up the database should be done before accessing web app:
-
-##Setup (for database)
-
-###1. Run scripts in "database" folder following the order
-###2. Import test data 999
-*** Procedure for Neo4j is included in Cypher Script
 
 ## Setup (for development)
 
@@ -77,7 +66,3 @@ flask run --host=0.0.0.0
 ```
 
 Then, navigate to http://localhost:5000.
-=======
-- [relational database](INSTALL_RELATIONAL.md)
-- [graph database](INSTALL_GRAPH.md)
->>>>>>> 236992aeab88b936e479d066771b7e16afc29673

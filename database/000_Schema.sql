@@ -53,6 +53,7 @@ CREATE TABLE TCreditCard(
 	cCardholderName VARCHAR(200),
 	cExpiration DATE NOT NULL,
 	cCCV NUMERIC(3,0) NOT NULL,
+	fTotalPaid MONEY DEFAULT 0,
 	PRIMARY KEY(iCardId),
 	FOREIGN KEY(iUserId) REFERENCES TUser
 	);

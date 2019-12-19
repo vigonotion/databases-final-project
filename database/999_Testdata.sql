@@ -464,6 +464,50 @@ INSERT dbo.TRating(iProductId, iUserId, iRating, cComment) VALUES (9, 8, 5, 'We 
 INSERT dbo.TRating(iProductId, iUserId, iRating, cComment) VALUES (3, 3, NULL, NULL)
 GO
 
+/*
+	Changes to TProducts for data warehouse testing
+*/
+
+update TProduct set fUnitPrice = 200, cDescription = 'Protects your skin from some dangerous uv radiation factor 10'
+where iProductId = 1
+update TProduct set fUnitPrice = 500, cDescription = '[NEW]Protects your skin from most dangerous uv radiation factor 50'
+where iProductId = 1
+update TProduct set fUnitPrice = 900, cDescription = '[NEW]Protects your skin from all dangerous uv radiation factor 999'
+where iProductId = 1
+
+update TProduct set cDescription = 'This cookie is made by the best chef in the world'
+where iProductId = 2
+update TProduct set cDescription = 'This cookie is made by the best chef in the world. Warning may contain nuts'
+where iProductId = 2
+update TProduct set iQuantity = 9999, cDescription = 'JUST RESTOCKED. This cookie is made by the best chef in the world. Warning may contain nuts'
+where iProductId = 2
+
+update TProduct set cDescription = 'specially formulated for dry hair. Enriched with key ingredient extracts for their enriching properties. It leaves your hair manageable and soft. 
+									Bottle is recyclable'
+where iProductId = 3
+update TProduct set cDescription = 'specially formulated for dry hair. Enriched with key ingredient extracts for their enriching properties. It leaves your hair manageable and soft. 
+									Bottle is PBA FREE and recyclable'
+where iProductId = 3
+update TProduct set cDescription = 'specially formulated for dry hair. Enriched with key ingredient extracts for their enriching properties. It leaves your hair manageable and soft. Size: 100ml 
+									Bottle is PBA FREE and recyclable.'
+where iProductId = 3
+
+update TProduct set iQuantity = 500 
+where iProductId = 4
+update TProduct set iQuantity = 5000 
+where iProductId = 4
+update TProduct set iQuantity = 500 
+where iProductId = 4
+
+update TProduct set cName = 'Ambrosia'
+where iProductId = 6
+update TProduct set cDescription = 'For everyone Ambrosia bought we will plant a tree'
+where iProductId = 6
+update TProduct set fUnitPrice = 199, cDescription = 'For everyone Ambrosia bought we will plant a tree'
+where iProductId = 6
+
+
+
 --
 -- Set NOEXEC to off
 --
